@@ -1,4 +1,4 @@
-from data.classes.constants import SQUARE_SIZE, GREY, CROWN
+from .constants import SQUARE_SIZE, GREY, CROWN
 import pygame
 
 

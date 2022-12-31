@@ -1,16 +1,21 @@
 import pygame
-from data.classes.constants import RED, WHITE, BLUE, SQUARE_SIZE
-from data.classes.board import Board
+from .constants import SQUARE_SIZE, WHITE, RED, BLUE
+from .board import Board
+from .menu import Menu
 
 
 class Game:
     def __init__(self, win):
-        self._init()
         self.win = win
+        self._init()
 
     def update(self):
-        self.board.draw(self.win)
-        self.draw_valid_moves(self.valid_moves)
+        if self.menu.status:
+            self.menu.draw_background(self.win)
+            self.menu.draw_options(self.win)
+        else:
+            self.board.draw(self.win)
+            self.draw_valid_moves(self.valid_moves)
         pygame.display.update()
 
     def _init(self):
@@ -18,8 +23,11 @@ class Game:
         self.board = Board()
         self.turn = RED
         self.valid_moves = {}
+        self.menu = Menu()
 
     def winner(self):
+        if self.board.winner() is not None:
+            self.menu.status = True
         return self.board.winner()
 
     def reset(self):
@@ -56,8 +64,7 @@ class Game:
     def draw_valid_moves(self, moves):
         for move in moves:
             row, col = move
-            pygame.draw.circle(self.win, BLUE,
-                               (col * SQUARE_SIZE + SQUARE_SIZE // 2, row * SQUARE_SIZE + SQUARE_SIZE // 2), 15)
+            pygame.draw.circle(self.win, BLUE, (col * SQUARE_SIZE + SQUARE_SIZE // 2, row * SQUARE_SIZE + SQUARE_SIZE // 2), 15)
 
     def change_turn(self):
         self.valid_moves = {}
@@ -65,3 +72,7 @@ class Game:
             self.turn = WHITE
         else:
             self.turn = RED
+
+    def chose_option(self, option):
+        if option == 1:
+            self.menu.status = False
