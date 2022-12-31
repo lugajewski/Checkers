@@ -1,6 +1,6 @@
 import pygame
-from constants import WIDTH, HEIGHT, SQUARE_SIZE, RED
-from game import Game
+from data.classes.constants import WIDTH, HEIGHT, SQUARE_SIZE
+from data.classes.game import Game
 
 FPS = 60
 

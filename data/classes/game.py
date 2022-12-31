@@ -1,6 +1,6 @@
 import pygame
-from constants import RED, WHITE, BLUE, SQUARE_SIZE
-from board import Board
+from data.classes.constants import RED, WHITE, BLUE, SQUARE_SIZE
+from data.classes.board import Board
 
 
 class Game:
