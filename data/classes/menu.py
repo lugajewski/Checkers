@@ -28,6 +28,20 @@ class Menu:
         pygame.draw.rect(win, self.options, (WIDTH//4, HEIGHT//4, WIDTH//2, HEIGHT//8))
         tekst = font.render("Ustawienia", False, self.text)
         win.blit(tekst, (WIDTH//3-20, HEIGHT//4))
+
+    def draw_result(self, win, result):
+        pygame.draw.rect(win, self.background, (0, 0, WIDTH, HEIGHT))
+        if not pygame.font.get_init():
+            pygame.font.init()
+        font = pygame.font.Font("data/assets/arial1.ttf", 50)
+        if result == RED:
+            tekst = font.render("Czerwone wygraly", False, self.text)
+        if result == WHITE:
+            tekst = font.render("Biale wygraly", False, self.text)
+        win.blit(tekst, (WIDTH//5, HEIGHT//2))
+
+
+
     def chose_options(self, option, game):
         if option == 1:
             self.status = False

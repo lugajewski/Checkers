@@ -27,7 +27,10 @@ class Game:
 
     def winner(self):
         if self.board.winner() is not None:
-            self.menu.status = True
+            self.menu.draw_result(self.win, self.board.winner())
+            pygame.display.update()
+            pygame.time.wait(1000)
+            self.reset()
         return self.board.winner()
 
     def reset(self):

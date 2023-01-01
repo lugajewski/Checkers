@@ -38,11 +38,13 @@ def main():
 
         if game.winner() is not None:
             print(game.winner())
-            run = False
+            game.menu.status = True
 
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT and game.menu.status == True:
                 run = False
+            if event.type == pygame.QUIT and game.menu.status == False:
+                game.menu.status = True
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
