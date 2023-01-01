@@ -1,11 +1,13 @@
 import pygame
-from .constants import HEIGHT, WIDTH, BLACK, WHITE, RED
+from .constants import HEIGHT, WIDTH, BLACK, WHITE, RED, BLUE, GREY
 
 
 class Menu:
     def __init__(self):
         self.background = BLACK
-        self.options = RED
+        self.options1 = RED
+        self.options2 = BLUE
+        self.options3 = GREY
         self.text = WHITE
         self.status = True
 
@@ -16,18 +18,18 @@ class Menu:
         if not pygame.font.get_init():
             pygame.font.init()
         # single player
-        pygame.draw.rect(win, self.options, (WIDTH//4, HEIGHT//9, WIDTH//2, HEIGHT // 8))
+        pygame.draw.rect(win, self.options1, (0, 0 + HEIGHT//10, WIDTH, HEIGHT//3))
         font = pygame.font.Font("data/assets/arial1.ttf", 40)
         tekst = font.render("Gra SinglePlayer", False, self.text)
-        win.blit(tekst, (WIDTH//3-20, HEIGHT//7))
+        win.blit(tekst, (WIDTH//10, HEIGHT//10))
         # online
-        pygame.draw.rect(win, self.options, (WIDTH // 4, HEIGHT // 2, WIDTH // 2, HEIGHT // 8))
+        pygame.draw.rect(win, self.options2, (0, HEIGHT // 3 + HEIGHT//10, WIDTH, HEIGHT // 3))
         tekst = font.render("Gra Multiplayer", False, self.text)
-        win.blit(tekst, (WIDTH // 3 - 20, HEIGHT // 2))
+        win.blit(tekst, (WIDTH//10, HEIGHT//10 + HEIGHT//3))
         # settings
-        pygame.draw.rect(win, self.options, (WIDTH//4, HEIGHT//4, WIDTH//2, HEIGHT//8))
+        pygame.draw.rect(win, self.options3, (0, HEIGHT//3 + HEIGHT//3 + HEIGHT//10, WIDTH, HEIGHT//3))
         tekst = font.render("Ustawienia", False, self.text)
-        win.blit(tekst, (WIDTH//3-20, HEIGHT//4))
+        win.blit(tekst, (WIDTH//10, HEIGHT//10 + HEIGHT//3 + HEIGHT//3))
 
     def draw_result(self, win, result):
         pygame.draw.rect(win, self.background, (0, 0, WIDTH, HEIGHT))
