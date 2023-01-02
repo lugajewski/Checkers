@@ -3,7 +3,7 @@ from .constants import SQUARE_SIZE, WHITE, RED, BLUE
 from .board import Board
 from .menu import Menu
 
-
+# check
 class Game:
     def __init__(self, win):
         self.win = win
