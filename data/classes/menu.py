@@ -21,15 +21,15 @@ class Menu:
         pygame.draw.rect(win, self.options1, (0, 0 + HEIGHT//10, WIDTH, HEIGHT//3))
         font = pygame.font.Font("data/assets/arial1.ttf", 40)
         tekst = font.render("Gra SinglePlayer", False, self.text)
-        win.blit(tekst, (WIDTH//10, HEIGHT//10))
+        win.blit(tekst, (WIDTH//3, HEIGHT//10 + HEIGHT//6 - font.get_height()//2))
         # online
         pygame.draw.rect(win, self.options2, (0, HEIGHT // 3 + HEIGHT//10, WIDTH, HEIGHT // 3))
         tekst = font.render("Gra Multiplayer", False, self.text)
-        win.blit(tekst, (WIDTH//10, HEIGHT//10 + HEIGHT//3))
+        win.blit(tekst, (WIDTH//3, HEIGHT//10 + HEIGHT//6 + HEIGHT//3 - font.get_height()//2))
         # settings
         pygame.draw.rect(win, self.options3, (0, HEIGHT//3 + HEIGHT//3 + HEIGHT//10, WIDTH, HEIGHT//3))
         tekst = font.render("Ustawienia", False, self.text)
-        win.blit(tekst, (WIDTH//10, HEIGHT//10 + HEIGHT//3 + HEIGHT//3))
+        win.blit(tekst, (WIDTH//3,HEIGHT//6 + HEIGHT//3 + HEIGHT//3 + font.get_height()//2))
 
     def draw_result(self, win, result):
         pygame.draw.rect(win, self.background, (0, 0, WIDTH, HEIGHT))
@@ -41,6 +41,8 @@ class Menu:
         if result == WHITE:
             tekst = font.render("Biale wygraly", False, self.text)
         win.blit(tekst, (WIDTH//5, HEIGHT//2))
+        pygame.display.update()
+        pygame.time.wait(3000)
 
 
 
