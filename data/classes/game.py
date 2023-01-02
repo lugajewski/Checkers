@@ -73,7 +73,3 @@ class Game:
             self.turn = WHITE
         else:
             self.turn = RED
-
-    def chose_option(self, option):
-        if option == 1:
-            self.menu.status = False
