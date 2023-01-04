@@ -50,3 +50,6 @@ class Menu:
         if option == 1:
             self.status = False
             game.status = True
+        elif option == 2:
+            self.status = False
+            game.init_online()

@@ -8,25 +8,6 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Checkers')
 
 
-def get_row_col_from_mouse(pos):
-    x, y = pos
-    row = y // SQUARE_SIZE
-    col = x // SQUARE_SIZE
-    return row, col
-
-
-def get_option_from_mouse(pos):
-    x, y = pos
-    option = 0
-    if 0 < y < 300:
-        option = 1
-    if 300 < y < 600:
-        option = 2
-    if y > 600:
-        option = 3
-    return option
-
-
 def main():
     run = True
     clock = pygame.time.Clock()
@@ -34,7 +15,8 @@ def main():
 
     while run:
         clock.tick(FPS)
-
+        if game.online:
+            game.board = game.network.rcv()
         if game.winner() is not None:
             print(game.winner())
             game.menu.status = True
@@ -48,11 +30,16 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 if game.menu.status:
-                    option = get_option_from_mouse(pos)
+                    option = game.get_option_from_mouse(pos)
                     game.menu.chose_options(option, game)
+                elif game.menu.status == False and game.online == True and game.turn != game.game_online.side:
+                    pass
                 else:
-                    row, col = get_row_col_from_mouse(pos)
+                    row, col = game.get_row_col_from_mouse(pos)
                     game.select(row, col)
+                    if game.online:
+                        game.game_online.board = game.board
+                        game.network.send(game.game_online.board)
         game.update()
     pygame.quit()
 

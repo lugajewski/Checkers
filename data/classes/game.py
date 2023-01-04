@@ -2,6 +2,8 @@ import pygame
 from .constants import SQUARE_SIZE, WHITE, RED, BLUE
 from .board import Board
 from .menu import Menu
+from .game_online import Game_online
+from .network import Network
 
 
 class Game:
@@ -24,6 +26,7 @@ class Game:
         self.turn = RED
         self.valid_moves = {}
         self.menu = Menu()
+        self.online = False
 
     def winner(self):
         if self.board.winner() is not None:
@@ -73,3 +76,28 @@ class Game:
             self.turn = WHITE
         else:
             self.turn = RED
+
+    def init_online(self):
+        if self.online != True:
+            self.game_online = Game_online()
+            self.network = Network()
+            self.game_online.side = self.network.getP()
+            self.online = True
+
+    def get_row_col_from_mouse(self, pos):
+        x, y = pos
+        row = y // SQUARE_SIZE
+        col = x // SQUARE_SIZE
+        return row, col
+
+    def get_option_from_mouse(self, pos):
+        x, y = pos
+        option = 0
+        if 0 < y < 300:
+            option = 1
+        if 300 < y < 600:
+            option = 2
+        if y > 600:
+            option = 3
+        return option
+
