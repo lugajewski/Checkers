@@ -17,12 +17,14 @@ s.listen(2)
 print("Waiting for a connection, Server Started")
 pCount = 0
 
+RED = (255, 0, 0)
+WHITE = (255, 255, 255)
 
 def threaded_client(conn, pCount):
     if pCount == 1:
-        conn.send(str.encode(str("RED")))
+        conn.send(pickle.dumps(RED))
     if pCount == 2:
-        conn.send(str.encode(str("WHITE")))
+        conn.send(pickle.dumps(WHITE))
     reply = ""
     while True:
         try:

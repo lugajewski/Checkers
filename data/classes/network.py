@@ -16,7 +16,7 @@ class Network:
     def connect(self):
         try:
             self.client.connect(self.addr)
-            side = self.client.recv(2048).decode()
+            side = pickle.loads(self.client.recv(2048))
             return side
         except:
             pass

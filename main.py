@@ -15,8 +15,6 @@ def main():
 
     while run:
         clock.tick(FPS)
-        if game.online:
-            game.board = game.network.rcv()
         if game.winner() is not None:
             print(game.winner())
             game.menu.status = True
@@ -33,13 +31,15 @@ def main():
                     option = game.get_option_from_mouse(pos)
                     game.menu.chose_options(option, game)
                 elif game.menu.status == False and game.online == True and game.turn != game.game_online.side:
-                    pass
+                    while game.turn != game.game_online.side:
+                        game.game_online = game.network.rcv()
+                    game.board = game.game_online.board
                 else:
                     row, col = game.get_row_col_from_mouse(pos)
                     game.select(row, col)
                     if game.online:
                         game.game_online.board = game.board
-                        game.network.send(game.game_online.board)
+                        game.network.send(game.game_online)
         game.update()
     pygame.quit()
 
