@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 from data.classes.constants import WIDTH, HEIGHT, SQUARE_SIZE, WHITE, RED
 from data.classes.game import Game
 from data.classes.AI import minimax
@@ -31,12 +32,16 @@ def main():
             game.game_online = game.network.s_r(game.game_online)
 
         for event in pygame.event.get():
-            if event.type == pygame.QUIT and game.menu.navigator == 0:
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    if game.menu.navigator == 0:
+                        run = False
+                    elif game.menu.navigator == 1 or game.menu.navigator == 2 or (game.menu.navigator == 4 and game.settings.navigator == 0):
+                        game.menu.navigator = 0
+                    elif game.menu.navigator == 4 and (game.settings.navigator == 1 or game.settings.navigator == 2):
+                        game.settings.navigator = 0
+            if event.type == pygame.QUIT:
                 run = False
-            if event.type == pygame.QUIT and (game.menu.navigator == 1 or game.menu.navigator == 2 or (game.menu.navigator == 4 and game.settings.navigator == 0)):
-                game.menu.navigator = 0
-            if event.type == pygame.QUIT and game.menu.navigator == 4 and (game.settings.navigator == 1 or game.settings.navigator == 2):
-                game.settings.navigator = 0
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
