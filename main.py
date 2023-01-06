@@ -5,8 +5,6 @@ from data.classes.game import Game
 from data.classes.AI import minimax
 from data.classes.ads import Ads
 
-FPS = 60
-
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Checkers')
 

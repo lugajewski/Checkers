@@ -1,12 +1,14 @@
 import socket
 from _thread import *
 import pickle
+from data.classes.board import Board
 
 server ="192.168.68.30"
 
 port = 5555
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+board = Board()
 
 try:
     s.bind((server, port))
@@ -28,8 +30,11 @@ def threaded_client(conn, pCount):
     reply = ""
     while True:
         try:
-            game = pickle.loads(conn.recv(4096*32))
-            conn.sendall(pickle.dumps(game))
+            data = pickle.loads(conn.recv(4096))
+            if data == "get":
+                conn.sendall(pickle.dumps(board.board))
+            else:
+                board.board = data
         except:
             break
     print("Lost connection")

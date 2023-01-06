@@ -21,9 +21,15 @@ class Network:
         except:
             pass
 
-    def s_r(self, data):
+    def send_board(self, data):
         try:
             self.client.send(pickle.dumps(data))
-            return pickle.loads(self.client.recv(2048 * 64))
+        except socket.error as e:
+            print(e)
+
+    def get_board(self):
+        try:
+            self.client.send(pickle.dumps("get"))
+            return pickle.loads(self.client.recv(4096))
         except socket.error as e:
             print(e)
