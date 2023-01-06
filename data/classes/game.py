@@ -19,7 +19,7 @@ class Game:
         elif self.menu.navigator == 1 or self.menu.navigator == 2:
             self.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
             self.draw_valid_moves(self.valid_moves)
-        elif self.menu.navigator == 3:
+        elif self.menu.navigator == 4:
             self.settings.draw_settings_background(self.win)
             if self.settings.navigator == 0:
                 self.settings.draw_settings_options(self.win)
