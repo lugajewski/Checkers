@@ -36,7 +36,6 @@ class Game:
         self.turn = RED
         self.valid_moves = {}
         self.menu = Menu()
-        self.online = False
 
     def winner(self):
         if self.board.winner() is not None:
@@ -93,13 +92,6 @@ class Game:
     def ai_move(self, board):
         self.board = board
         self.change_turn()
-
-    def init_online(self):
-        if self.online != True:
-            self.game_online = Game_online()
-            self.network = Network()
-            self.game_online.side = self.network.getP()
-            self.online = True
 
     def get_row_col_from_mouse(self, pos):
         x, y = pos
