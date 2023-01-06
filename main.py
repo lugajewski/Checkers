@@ -27,8 +27,10 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT and game.menu.navigator == 0:
                 run = False
-            if event.type == pygame.QUIT and game.menu.navigator == 1:
+            if event.type == pygame.QUIT and (game.menu.navigator == 1 or game.menu.navigator == 2 or (game.menu.navigator == 3 and game.settings.navigator == 0)):
                 game.menu.navigator = 0
+            if event.type == pygame.QUIT and game.menu.navigator == 3 and (game.settings.navigator == 1 or game.settings.navigator == 2):
+                game.settings.navigator = 0
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
@@ -42,6 +44,9 @@ def main():
                     game.select(row, col)
                     if game.online:
                         game.game_online.turn = game.turn
+                elif game.menu.navigator == 3:
+                    option = game.get_option_from_mouse(pos)
+                    game.settings.chose_options(option, game)
         if ads.status == False:
             game.update()
     pygame.quit()

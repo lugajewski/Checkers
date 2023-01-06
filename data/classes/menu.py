@@ -48,7 +48,9 @@ class Menu:
 
     def chose_options(self, option, game):
         if option == 1:
-            self.navigator = 1
+            self.navigator = option
         elif option == 2:
-            self.navigator = 2
+            self.navigator = option
             game.init_online()
+        elif option == 3:
+            self.navigator = option
