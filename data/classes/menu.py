@@ -9,7 +9,7 @@ class Menu:
         self.options2 = BLUE
         self.options3 = GREY
         self.text = WHITE
-        self.status = True
+        self.navigator = 0
 
     def draw_background(self, win):
         pygame.draw.rect(win, self.background, (0, 0, WIDTH, HEIGHT))
@@ -48,8 +48,7 @@ class Menu:
 
     def chose_options(self, option, game):
         if option == 1:
-            self.status = False
-            game.status = True
+            self.navigator = 1
         elif option == 2:
-            self.status = False
+            self.navigator = 2
             game.init_online()

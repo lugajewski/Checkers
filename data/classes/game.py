@@ -12,10 +12,10 @@ class Game:
         self._init()
 
     def update(self):
-        if self.menu.status:
+        if self.menu.navigator == 0:
             self.menu.draw_background(self.win)
             self.menu.draw_options(self.win)
-        else:
+        elif self.menu.navigator == 1 or self.menu.navigator == 2:
             self.board.draw(self.win)
             self.draw_valid_moves(self.valid_moves)
         pygame.display.update()
