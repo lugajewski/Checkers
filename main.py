@@ -17,24 +17,24 @@ def main():
         clock.tick(FPS)
         if game.winner() is not None:
             print(game.winner())
-            game.menu.status = True
+            game.menu.navigator = 0
         if game.online:
             game.game_online = game.network.s_r(game.game_online)
 
         for event in pygame.event.get():
-            if event.type == pygame.QUIT and game.menu.status == True:
+            if event.type == pygame.QUIT and game.menu.navigator == 0:
                 run = False
-            if event.type == pygame.QUIT and game.menu.status == False:
-                game.menu.status = True
+            if event.type == pygame.QUIT and game.menu.navigator == 1:
+                game.menu.navigator = 0
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                if game.menu.status:
+                if game.menu.navigator == 0:
                     option = game.get_option_from_mouse(pos)
                     game.menu.chose_options(option, game)
-                elif game.menu.status == False and game.online == True and game.turn != game.game_online.side:
+                elif game.menu.navigator == 2 and game.turn != game.game_online.side:
                     pass
-                else:
+                elif game.menu.navigator == 1:
                     row, col = game.get_row_col_from_mouse(pos)
                     game.select(row, col)
                     if game.online:
