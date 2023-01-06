@@ -6,9 +6,11 @@ from data.classes.board import Board
 server ="192.168.68.30"
 
 port = 5555
-
+RED = (255, 0, 0)
+WHITE = (255, 255, 255)
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 board = Board()
+board.create_board(RED)
 
 try:
     s.bind((server, port))
@@ -19,8 +21,7 @@ s.listen(2)
 print("Waiting for a connection, Server Started")
 pCount = 0
 
-RED = (255, 0, 0)
-WHITE = (255, 255, 255)
+
 
 def threaded_client(conn, pCount):
     if pCount == 1:
@@ -33,8 +34,10 @@ def threaded_client(conn, pCount):
             data = pickle.loads(conn.recv(4096))
             if data == "get":
                 conn.sendall(pickle.dumps(board.board))
+                print("sending board")
             else:
                 board.board = data
+                print("getting board")
         except:
             break
     print("Lost connection")

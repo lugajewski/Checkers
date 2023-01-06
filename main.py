@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from data.classes.constants import WIDTH, HEIGHT, SQUARE_SIZE, WHITE, RED
+from data.classes.constants import WIDTH, HEIGHT, SQUARE_SIZE, WHITE, RED, FPS
 from data.classes.game import Game
 from data.classes.AI import minimax
 from data.classes.ads import Ads
@@ -26,8 +26,6 @@ def main():
         if game.winner() is not None:
             print(game.winner())
             game.menu.navigator = 0
-        if game.online:
-            game.game_online = game.network.s_r(game.game_online)
 
         for event in pygame.event.get():
             if event.type == KEYDOWN:
@@ -46,13 +44,9 @@ def main():
                 if game.menu.navigator == 0:
                     option = game.menu.get_option_from_mouse(pos)
                     game.menu.chose_options(option, game)
-                elif game.menu.navigator == 2 and game.turn != game.game_online.side:
-                    pass
                 elif game.menu.navigator == 1:
                     row, col = game.get_row_col_from_mouse(pos)
                     game.select(row, col)
-                    if game.online:
-                        game.game_online.turn = game.turn
                 elif game.menu.navigator == 4:
                     option = game.get_option_from_mouse(pos)
                     game.settings.chose_options(option, game)
