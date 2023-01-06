@@ -1,6 +1,7 @@
 import pygame
 from data.classes.constants import WIDTH, HEIGHT, SQUARE_SIZE, WHITE, RED
 from data.classes.game import Game
+from data.classes.ads import Ads
 
 FPS = 60
 
@@ -12,6 +13,8 @@ def main():
     run = True
     clock = pygame.time.Clock()
     game = Game(WIN)
+    ads = Ads(WIN)
+    ads.start_ads()
 
     while run:
         clock.tick(FPS)
@@ -39,7 +42,8 @@ def main():
                     game.select(row, col)
                     if game.online:
                         game.game_online.turn = game.turn
-        game.update()
+        if ads.status == False:
+            game.update()
     pygame.quit()
 
 
