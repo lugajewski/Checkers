@@ -28,4 +28,4 @@ class Network:
             print(e)
 
     def rcv(self):
-        return pickle.loads(self.client.recv(2048 * 2))
+        return pickle.loads(self.client.recv(2048 * 4))
