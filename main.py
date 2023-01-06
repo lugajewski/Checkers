@@ -1,5 +1,5 @@
 import pygame
-from data.classes.constants import WIDTH, HEIGHT, SQUARE_SIZE
+from data.classes.constants import WIDTH, HEIGHT, SQUARE_SIZE, WHITE, RED
 from data.classes.game import Game
 
 FPS = 60
@@ -39,6 +39,10 @@ def main():
                     game.select(row, col)
                     if game.online:
                         game.game_online.board = game.board
+                        if game.game_online.side == WHITE:
+                            game.game_online.side = RED
+                        else:
+                            game.game_online.side = WHITE
                         game.network.send(game.game_online)
         game.update()
     pygame.quit()
