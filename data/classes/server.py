@@ -28,7 +28,7 @@ def threaded_client(conn, pCount):
     reply = ""
     while True:
         try:
-            game = pickle.loads(conn.recv(4096*2))
+            game = pickle.loads(conn.recv(4096*8))
             conn.sendall(pickle.dumps(game))
         except:
             break
