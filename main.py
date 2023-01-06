@@ -14,7 +14,7 @@ def main():
     clock = pygame.time.Clock()
     game = Game(WIN)
     ads = Ads(WIN)
-    ads.start_ads()
+    #ads.start_ads()
 
     while run:
         clock.tick(FPS)

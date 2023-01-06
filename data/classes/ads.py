@@ -10,7 +10,7 @@ class Ads:
         self.ad3 = pygame.transform.scale(pygame.image.load('data/assets/ad3.png'), (600, 600))
         self.ad4 = pygame.transform.scale(pygame.image.load('data/assets/ad4.png'), (600, 600))
         self.ad5 = pygame.transform.scale(pygame.image.load('data/assets/ad5.png'), (600, 600))
-        self.status = True
+        self.status = False
         self.win = win
 
     def show_ads(self):
