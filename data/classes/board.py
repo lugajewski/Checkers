@@ -48,13 +48,13 @@ class Board:
                 else:
                     self.board[row].append(0)
 
-    def draw(self, win, squares_color):
+    def draw(self, win, pieces_color, squares_color):
         self.draw_squares(win, squares_color)
         for row in range(ROWS):
             for col in range(COLS):
                 piece = self.board[row][col]
                 if piece != 0:
-                    piece.draw(win)
+                    piece.draw(win, pieces_color)
 
     def remove(self, pieces):
         for piece in pieces:

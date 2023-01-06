@@ -1,4 +1,4 @@
-from .constants import SQUARE_SIZE, GREY, CROWN
+from .constants import SQUARE_SIZE, GREY, CROWN, WHITE
 import pygame
 
 
@@ -23,10 +23,13 @@ class Piece:
     def make_king(self):
         self.king = True
 
-    def draw(self, win):
+    def draw(self, win, pieces_color):
         radius = SQUARE_SIZE // 2 - self.PADDING
         pygame.draw.circle(win, self.outline_color, (self.x, self.y), radius + self.OUTLINE)
-        pygame.draw.circle(win, self.color, (self.x, self.y), radius)
+        if self.color == WHITE:
+            pygame.draw.circle(win, self.color, (self.x, self.y), radius)
+        else:
+            pygame.draw.circle(win, pieces_color, (self.x, self.y), radius)
         if self.king:
             win.blit(CROWN, (self.x - CROWN.get_width() // 2, self.y - CROWN.get_height() // 2))
 

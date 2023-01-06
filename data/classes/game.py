@@ -17,14 +17,14 @@ class Game:
             self.menu.draw_background(self.win)
             self.menu.draw_options(self.win)
         elif self.menu.navigator == 1 or self.menu.navigator == 2:
-            self.board.draw(self.win, self.settings.squares_color)
+            self.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
             self.draw_valid_moves(self.valid_moves)
         elif self.menu.navigator == 3:
             self.settings.draw_settings_background(self.win)
             if self.settings.navigator == 0:
                 self.settings.draw_settings_options(self.win)
             elif self.settings.navigator == 1:
-                self.settings.draw_squares_settings_options(self.win)
+                self.settings.draw_pieces_settings_options(self.win)
             elif self.settings.navigator == 2:
                 self.settings.draw_squares_settings_options(self.win)
         pygame.display.update()
