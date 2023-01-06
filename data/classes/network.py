@@ -21,11 +21,9 @@ class Network:
         except:
             pass
 
-    def send(self, data):
+    def s_r(self, data):
         try:
             self.client.send(pickle.dumps(data))
+            return pickle.loads(self.client.recv(2048 * 64))
         except socket.error as e:
             print(e)
-
-    def rcv(self):
-        return pickle.loads(self.client.recv(2048 * 64))
