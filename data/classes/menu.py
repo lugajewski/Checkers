@@ -1,6 +1,5 @@
 import pygame
 from .constants import HEIGHT, WIDTH, BLACK, WHITE, RED, BLUE, GREY
-from .game_online import Game_online
 
 
 class Menu:
@@ -73,6 +72,3 @@ class Menu:
 
     def chose_options(self, option, game):
         self.navigator = option
-        if option == 2:
-            self.game_online = Game_online(game.win, game)
-            self.game_online.start_online_game()

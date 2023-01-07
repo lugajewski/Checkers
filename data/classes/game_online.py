@@ -10,20 +10,8 @@ class Game_online():
         self._init(game)
 
     def update(self):
-        if self.menu.navigator == 0:
-            self.menu.draw_background(self.win)
-            self.menu.draw_options(self.win)
-        elif self.menu.navigator == 1 or self.menu.navigator == 2:
-            self.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
-            self.draw_valid_moves(self.valid_moves)
-        elif self.menu.navigator == 4:
-            self.settings.draw_settings_background(self.win)
-            if self.settings.navigator == 0:
-                self.settings.draw_settings_options(self.win)
-            elif self.settings.navigator == 1:
-                self.settings.draw_pieces_settings_options(self.win)
-            elif self.settings.navigator == 2:
-                self.settings.draw_squares_settings_options(self.win)
+        self.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
+        self.draw_valid_moves(self.valid_moves)
         pygame.display.update()
 
     def _init(self, game):
@@ -115,22 +103,20 @@ class Game_online():
         run = True
         clock = pygame.time.Clock()
         while run:
-            clock.tick(1)
-            self.last_board = self.network.get_board()
-            if self.last_board != self.board.board:
-                self.board.board = self.last_board
+            clock.tick(60)
+            self.board.board = self.network.get_board()
             for event in pygame.event.get():
                 if self.winner() is not None:
                     print(self.winner())
                     self.menu.navigator = 0
                     run = False
-                    if event.type == pygame.QUIT:
-                        run = False
-                    if event.type == pygame.MOUSEBUTTONDOWN and self.turn == self.side:
-                        pos = pygame.mouse.get_pos()
-                        row, col = self.get_row_col_from_mouse(pos)
-                        self.select(row, col)
-                        self.network.send_board(self.board.board)
+                if event.type == pygame.QUIT:
+                    run = False
+                if event.type == pygame.MOUSEBUTTONDOWN and self.turn == self.side:
+                    pos = pygame.mouse.get_pos()
+                    row, col = self.get_row_col_from_mouse(pos)
+                    self.select(row, col)
+                    self.network.send_board(self.board.board)
             self.update()
 
 

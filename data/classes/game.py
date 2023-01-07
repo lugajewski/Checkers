@@ -19,9 +19,11 @@ class Game:
         if self.menu.navigator == 0:
             self.menu.draw_background(self.win)
             self.menu.draw_options(self.win)
-        elif self.menu.navigator == 1 or self.menu.navigator == 2:
+        elif self.menu.navigator == 1:
             self.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
             self.draw_valid_moves(self.valid_moves)
+        elif self.menu.navigator == 2:
+            self._init_game_online()
         elif self.menu.navigator == 3:
             self.analysis.start_analysis()
             self.analysis.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
@@ -125,3 +127,6 @@ class Game:
             option = 3
         return option
 
+    def _init_game_online(self):
+        self.game_online = Game_online(self.win, self)
+        self.game_online.start_online_game()
