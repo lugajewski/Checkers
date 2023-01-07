@@ -32,7 +32,7 @@ class Menu:
         win.blit(tekst, (WIDTH // 4, HEIGHT // 4 + 3 * self.space_height + self.button_height - font.get_height() // 2))
         # analysis
         pygame.draw.rect(win, self.options2, (WIDTH//4, HEIGHT//4 + 3 * self.space_height + 2 * self.button_height, self.button_width, self.button_height))
-        tekst = font.render("Analiza (jeszcze nie dziala)", False, self.text)
+        tekst = font.render("Analiza", False, self.text)
         win.blit(tekst, (WIDTH // 4, HEIGHT // 4 + 4 * self.space_height + 2 * self.button_height - font.get_height() // 2))
         # settings
         pygame.draw.rect(win, self.options2, (WIDTH // 4, HEIGHT // 4 + 4 * self.space_height + 3 * self.button_height, self.button_width, self.button_height))

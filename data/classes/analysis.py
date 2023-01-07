@@ -12,8 +12,12 @@ class Analysis:
     def start_analysis(self):
         self.moves = pickle.load(open("file.p", "rb"))
 
-    def change_board(self):
-        if self.counter < len(self.moves):
-            self.board = self.moves[self.counter]
+    def change_board_next(self):
+        if self.counter < len(self.moves) - 1:
             self.counter += 1
+            self.board = self.moves[self.counter]
 
+    def change_board_prev(self):
+        if self.counter > 0:
+            self.counter -= 1
+            self.board = self.moves[self.counter]

@@ -45,6 +45,8 @@ class Game:
         self.menu = Menu()
         self.online = False
         self.moves = []
+        temp_board = deepcopy(self.board)
+        self.moves.append(temp_board)
 
     def winner(self):
         if self.board.winner() is not None:

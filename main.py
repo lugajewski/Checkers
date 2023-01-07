@@ -39,7 +39,9 @@ def main():
                     elif game.menu.navigator == 4 and (game.settings.navigator == 1 or game.settings.navigator == 2):
                         game.settings.navigator = 0
                 elif event.key == K_RIGHT and game.menu.navigator == 3:
-                    game.analysis.change_board()
+                    game.analysis.change_board_next()
+                elif event.key == K_LEFT and game.menu.navigator == 3:
+                    game.analysis.change_board_prev()
             if event.type == pygame.QUIT:
                 run = False
 
