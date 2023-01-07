@@ -8,8 +8,6 @@ class Board:
         self.board = []
         self.red_left = self.white_left = 12
         self.red_kings = self.white_kings = 0
-        #self.white_pieces_color = WHITE
-        #self.red_pieces_color = RED
         self.create_board(RED)
         self.background_color = BLACK
         self.squares_color = RED

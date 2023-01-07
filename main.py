@@ -4,17 +4,16 @@ from data.classes.constants import WIDTH, HEIGHT, SQUARE_SIZE, WHITE, RED, FPS
 from data.classes.game import Game
 from data.classes.AI import minimax
 from data.classes.ads import Ads
+import pickle
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Checkers')
-
 
 def main():
     run = True
     clock = pygame.time.Clock()
     game = Game(WIN)
     ads = Ads(WIN)
-    #ads.start_ads()
 
     while run:
         clock.tick(FPS)
@@ -32,10 +31,15 @@ def main():
                 if event.key == K_ESCAPE:
                     if game.menu.navigator == 0:
                         run = False
-                    elif game.menu.navigator == 1 or game.menu.navigator == 2 or (game.menu.navigator == 4 and game.settings.navigator == 0):
+                    elif game.menu.navigator == 1:
+                        game.menu.navigator = 0
+                        pickle.dump(game.moves, open("file.p", "wb" ))
+                    elif game.menu.navigator == 2 or game.menu.navigator == 3 or (game.menu.navigator == 4 and game.settings.navigator == 0):
                         game.menu.navigator = 0
                     elif game.menu.navigator == 4 and (game.settings.navigator == 1 or game.settings.navigator == 2):
                         game.settings.navigator = 0
+                elif event.key == K_RIGHT and game.menu.navigator == 3:
+                    game.analysis.change_board()
             if event.type == pygame.QUIT:
                 run = False
 

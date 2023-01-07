@@ -1,10 +1,13 @@
+from copy import deepcopy
 import pygame
 from .constants import SQUARE_SIZE, WHITE, RED, BLUE
 from .board import Board
 from .menu import Menu
 from .settings import Settings
+from .analysis import Analysis
 from .game_online import Game_online
 from .network import Network
+import pickle
 
 
 class Game:
@@ -19,6 +22,9 @@ class Game:
         elif self.menu.navigator == 1 or self.menu.navigator == 2:
             self.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
             self.draw_valid_moves(self.valid_moves)
+        elif self.menu.navigator == 3:
+            self.analysis.start_analysis()
+            self.analysis.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
         elif self.menu.navigator == 4:
             self.settings.draw_settings_background(self.win)
             if self.settings.navigator == 0:
@@ -33,9 +39,12 @@ class Game:
         self.settings = Settings()
         self.selected = None
         self.board = Board()
+        self.analysis = Analysis()
         self.turn = RED
         self.valid_moves = {}
         self.menu = Menu()
+        self.online = False
+        self.moves = []
 
     def winner(self):
         if self.board.winner() is not None:
@@ -72,6 +81,8 @@ class Game:
         else:
             return False
 
+        temp_board = deepcopy(self.board)
+        self.moves.append(temp_board)
         return True
 
     def draw_valid_moves(self, moves):
@@ -91,6 +102,8 @@ class Game:
 
     def ai_move(self, board):
         self.board = board
+        temp_board = deepcopy(self.board)
+        self.moves.append(temp_board)
         self.change_turn()
 
     def get_row_col_from_mouse(self, pos):
