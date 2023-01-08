@@ -1,35 +1,28 @@
 import pygame.event
-
+from copy import deepcopy
 from .board import Board
 from .constants import *
 from .network import Network
 from .settings import Settings
 class Game_online():
-    def __init__(self, win, game):
-        self.win = win
-        self._init(game)
+    def __init__(self):
+        self._init()
 
     def update(self):
         self.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
         self.draw_valid_moves(self.valid_moves)
         pygame.display.update()
 
-    def _init(self, game):
+    def _init(self):
         self.settings = Settings()
         self.selected = None
         self.board = Board()
         self.turn = RED
         self.valid_moves = {}
-        self.menu = game.menu
         self.network = Network()
         self.side = self.network.getP()
         self.last_board = self.board.board
 
-    def winner(self):
-        if self.board.winner() is not None:
-            self.menu.draw_result(self.win, self.board.winner())
-            self.reset()
-        return self.board.winner()
 
     def reset(self):
         self._init()
@@ -99,24 +92,5 @@ class Game_online():
             option = 3
         return option
 
-    def start_online_game(self):
-        run = True
-        clock = pygame.time.Clock()
-        while run:
-            clock.tick(60)
-            self.board.board = self.network.get_board()
-            for event in pygame.event.get():
-                if self.winner() is not None:
-                    print(self.winner())
-                    self.menu.navigator = 0
-                    run = False
-                if event.type == pygame.QUIT:
-                    run = False
-                if event.type == pygame.MOUSEBUTTONDOWN and self.turn == self.side:
-                    pos = pygame.mouse.get_pos()
-                    row, col = self.get_row_col_from_mouse(pos)
-                    self.select(row, col)
-                    self.network.send_board(self.board.board)
-            self.update()
 
 

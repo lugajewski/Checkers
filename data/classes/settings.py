@@ -1,58 +1,111 @@
 import pygame
-from .constants import HEIGHT, WIDTH, BLACK, WHITE, RED, BLUE, GREY, BROWN
+from .constants import HEIGHT, WIDTH, BLACK, WHITE, RED, BLUE, GREY, BROWN, BACKGROUND_COLOR, BUTTON_COLOR, SELECTED_BUTTON_COLOR, TEXT_COLOR
 
 
 class Settings:
     def __init__(self):
-        self.background_color = BLACK
-        self.option1_color = RED
-        self.option2_color = BLUE
+        self.button_width = HEIGHT // 2
+        self.space_height = (HEIGHT - HEIGHT // 4) / 16
+        self.button_height = self.space_height * 2
+        self.text_offset = self.button_height
+        self.button1_color = BUTTON_COLOR
+        self.button2_color = BUTTON_COLOR
         self.text = WHITE
         self.navigator = 0
         self.pieces_color = RED
         self.squares_color = RED
 
+    def set_button_colors(self, option):
+        if option == 1:
+            self.button1_color = SELECTED_BUTTON_COLOR
+        elif option == 2:
+            self.button2_color = SELECTED_BUTTON_COLOR
+        else:
+            self.button1_color = BUTTON_COLOR
+            self.button2_color = BUTTON_COLOR
+
     def draw_settings_background(self, win):
-        pygame.draw.rect(win, self.background_color, (0, 0, WIDTH, HEIGHT))
+        pygame.draw.rect(win, BACKGROUND_COLOR, (0, 0, WIDTH, HEIGHT))
 
-    def draw_settings_options(self, win):
+    def draw_settings_options(self, win, option):
         if not pygame.font.get_init():
             pygame.font.init()
-        # kolor bierek
-        pygame.draw.rect(win, self.option1_color, (0, 0 + HEIGHT//10, WIDTH, HEIGHT//3))
-        font = pygame.font.Font("data/assets/arial1.ttf", 40)
-        tekst = font.render("Zmiana koloru bierek", False, self.text)
-        win.blit(tekst, (WIDTH//3, HEIGHT//10 + HEIGHT//6 - font.get_height()//2))
-        # kolor pól
-        pygame.draw.rect(win, self.option2_color, (0, HEIGHT // 3 + HEIGHT//10, WIDTH, HEIGHT // 3))
-        tekst = font.render("Zmiana koloru pól", False, self.text)
-        win.blit(tekst, (WIDTH//3, HEIGHT//10 + HEIGHT//6 + HEIGHT//3 - font.get_height()//2))
 
-    def draw_pieces_settings_options(self, win):
+        self.set_button_colors(option)
+
+        font = pygame.font.Font("data/assets/broadway.ttf", 90)
+        # header
+        tekst = font.render("SUPER", False, TEXT_COLOR)
+        win.blit(tekst, (243.35, font.get_height() // 2))
+        tekst = font.render("SETTINGS", False, TEXT_COLOR)
+        win.blit(tekst, (170.6, font.get_height() + font.get_height() // 2))
+
+        font = pygame.font.Font("data/assets/broadway.ttf", 40)
+        # pieces settings button
+        pygame.draw.rect(win, self.button1_color, (WIDTH // 4, HEIGHT // 4 + self.space_height, self.button_width, self.button_height))
+        tekst = font.render("Pieces settings", False, TEXT_COLOR)
+        win.blit(tekst, (WIDTH //4 + self.text_offset, HEIGHT // 4 + 2 * self.space_height - font.get_height() // 2))
+        # board settings button
+        pygame.draw.rect(win, self.button2_color, (WIDTH//4, HEIGHT//4 + 2 * self.space_height + self.button_height, self.button_width, self.button_height))
+        tekst = font.render("Board settings", False, TEXT_COLOR)
+        win.blit(tekst, (WIDTH // 4 + self.text_offset, HEIGHT // 4 + 3 * self.space_height + self.button_height - font.get_height() // 2))
+
+    def draw_pieces_settings_options(self, win, option):
         if not pygame.font.get_init():
             pygame.font.init()
-        # kolor bierek
-        pygame.draw.rect(win, self.option1_color, (0, 0 + HEIGHT//10, WIDTH, HEIGHT//3))
-        font = pygame.font.Font("data/assets/arial1.ttf", 40)
-        tekst = font.render("Biale i czerwone", False, self.text)
-        win.blit(tekst, (WIDTH//3, HEIGHT//10 + HEIGHT//6 - font.get_height()//2))
-        # kolor pól
-        pygame.draw.rect(win, self.option2_color, (0, HEIGHT // 3 + HEIGHT//10, WIDTH, HEIGHT // 3))
-        tekst = font.render("Biale i brazowe", False, self.text)
-        win.blit(tekst, (WIDTH//3, HEIGHT//10 + HEIGHT//6 + HEIGHT//3 - font.get_height()//2))
 
-    def draw_squares_settings_options(self, win):
+        self.set_button_colors(option)
+
+        font = pygame.font.Font("data/assets/broadway.ttf", 90)
+        # header
+        tekst = font.render("SUPER", False, TEXT_COLOR)
+        win.blit(tekst, (243.35, font.get_height() // 2))
+        tekst = font.render("SETTINGS", False, TEXT_COLOR)
+        win.blit(tekst, (170.6, font.get_height() + font.get_height() // 2))
+
+        font = pygame.font.Font("data/assets/broadway.ttf", 40)
+        # red and white pieces
+        pygame.draw.rect(win, self.button1_color, (WIDTH // 4, HEIGHT // 4 + self.space_height, self.button_width, self.button_height))
+        tekst = font.render("Red and white pieces", False, TEXT_COLOR)
+        win.blit(tekst, (WIDTH // 4 + self.text_offset, HEIGHT // 4 + 2 * self.space_height - font.get_height() // 2))
+
+        # brown and white pieces
+        pygame.draw.rect(win, self.button2_color, (WIDTH // 4, HEIGHT // 4 + 2 * self.space_height + self.button_height, self.button_width, self.button_height))
+        tekst = font.render("Brown and white pieces", False, TEXT_COLOR)
+        win.blit(tekst, (WIDTH // 4 + self.text_offset, HEIGHT // 4 + 3 * self.space_height + self.button_height - font.get_height() // 2))
+
+    def draw_squares_settings_options(self, win, option):
         if not pygame.font.get_init():
             pygame.font.init()
-        # kolor bierek
-        pygame.draw.rect(win, self.option1_color, (0, 0 + HEIGHT//10, WIDTH, HEIGHT//3))
-        font = pygame.font.Font("data/assets/arial1.ttf", 40)
-        tekst = font.render("Czarne i czerwone", False, self.text)
-        win.blit(tekst, (WIDTH//3, HEIGHT//10 + HEIGHT//6 - font.get_height()//2))
-        # kolor pól
-        pygame.draw.rect(win, self.option2_color, (0, HEIGHT // 3 + HEIGHT//10, WIDTH, HEIGHT // 3))
-        tekst = font.render("Czarne i brazowe", False, self.text)
-        win.blit(tekst, (WIDTH//3, HEIGHT//10 + HEIGHT//6 + HEIGHT//3 - font.get_height()//2))
+
+        self.set_button_colors(option)
+
+        font = pygame.font.Font("data/assets/broadway.ttf", 90)
+        # header
+        tekst = font.render("SUPER", False, TEXT_COLOR)
+        win.blit(tekst, (243.35, font.get_height() // 2))
+        tekst = font.render("SETTINGS", False, TEXT_COLOR)
+        win.blit(tekst, (170.6, font.get_height() + font.get_height() // 2))
+
+        font = pygame.font.Font("data/assets/broadway.ttf", 40)
+        # red and black squares
+        pygame.draw.rect(win, self.button1_color, (WIDTH // 4, HEIGHT // 4 + self.space_height, self.button_width, self.button_height))
+        tekst = font.render("Red and black squares", False, TEXT_COLOR)
+        win.blit(tekst, (WIDTH // 4 + self.text_offset, HEIGHT // 4 + 2 * self.space_height - font.get_height() // 2))
+
+        # brown and black squares
+        pygame.draw.rect(win, self.button2_color, (WIDTH // 4, HEIGHT // 4 + 2 * self.space_height + self.button_height, self.button_width, self.button_height))
+        tekst = font.render("Brown and black squares", False, TEXT_COLOR)
+        win.blit(tekst, (WIDTH // 4 + self.text_offset, HEIGHT // 4 + 3 * self.space_height + self.button_height - font.get_height() // 2))
+
+    def get_option_from_mouse(self, pos):
+        x, y = pos
+        option = 0
+        if HEIGHT // 4 + self.space_height < y < HEIGHT // 4 + self.space_height + self.button_height:
+            option = 1
+        elif HEIGHT//4 + 2 * self.space_height + self.button_height < y < HEIGHT//4 + 2 * self.space_height + self.button_height + self.button_height:
+            option = 2
+        return option
 
     def chose_options(self, option, game):
         if self.navigator == 0:

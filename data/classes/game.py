@@ -18,23 +18,28 @@ class Game:
     def update(self):
         if self.menu.navigator == 0:
             self.menu.draw_background(self.win)
-            self.menu.draw_options(self.win)
+            pos = pygame.mouse.get_pos()
+            option = self.menu.get_option_from_mouse(pos)
+            self.menu.draw_options(self.win, option)
         elif self.menu.navigator == 1:
             self.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
             self.draw_valid_moves(self.valid_moves)
         elif self.menu.navigator == 2:
-            self._init_game_online()
+            self.game_online.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
+            self.draw_valid_moves(self.game_online.valid_moves)
         elif self.menu.navigator == 3:
             self.analysis.start_analysis()
             self.analysis.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
         elif self.menu.navigator == 4:
             self.settings.draw_settings_background(self.win)
+            pos = pygame.mouse.get_pos()
+            option = self.settings.get_option_from_mouse(pos)
             if self.settings.navigator == 0:
-                self.settings.draw_settings_options(self.win)
+                self.settings.draw_settings_options(self.win, option)
             elif self.settings.navigator == 1:
-                self.settings.draw_pieces_settings_options(self.win)
+                self.settings.draw_pieces_settings_options(self.win, option)
             elif self.settings.navigator == 2:
-                self.settings.draw_squares_settings_options(self.win)
+                self.settings.draw_squares_settings_options(self.win, option)
         pygame.display.update()
 
     def _init(self):
@@ -49,6 +54,7 @@ class Game:
         self.moves = []
         temp_board = deepcopy(self.board)
         self.moves.append(temp_board)
+        self.game_online = Game_online()
 
     def winner(self):
         if self.board.winner() is not None:

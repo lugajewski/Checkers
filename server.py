@@ -1,9 +1,10 @@
 import socket
 from _thread import *
 import pickle
+from copy import deepcopy
 from data.classes.board import Board
 
-server ="192.168.68.30"
+server ="192.168.56.1"
 
 port = 5555
 RED = (255, 0, 0)
@@ -31,7 +32,7 @@ def threaded_client(conn, pCount):
     reply = ""
     while True:
         try:
-            data = pickle.loads(conn.recv(4096))
+            data = deepcopy(pickle.loads(conn.recv(4096)))
             if data == "get":
                 conn.sendall(pickle.dumps(board.board))
                 print("sending board")
