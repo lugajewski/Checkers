@@ -21,6 +21,12 @@ class Menu:
         self.settings_button_icon = pygame.transform.scale(pygame.image.load('data/assets/settings_button_icon.png'), (65, 65))
         self.exit_button_icon = pygame.transform.scale(pygame.image.load('data/assets/exit_button_icon.png'), (65, 65))
 
+    def update(self, win):
+        self.draw_background(win)
+        pos = pygame.mouse.get_pos()
+        option = self.get_option_from_mouse(pos)
+        self.draw_options(win, option)
+
     def set_button_colors(self, option):
         if option == 1:
             self.start_button_color = SELECTED_BUTTON_COLOR

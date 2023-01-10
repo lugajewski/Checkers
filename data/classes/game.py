@@ -14,36 +14,6 @@ class Game:
         self.win = win
         self._init()
 
-    def update(self):
-        if self.menu.navigator == 0:
-            self.menu.draw_background(self.win)
-            pos = pygame.mouse.get_pos()
-            option = self.menu.get_option_from_mouse(pos)
-            self.menu.draw_options(self.win, option)
-        elif self.menu.navigator == 1:
-            if self.turn == WHITE:
-                value, new_board = minimax(self.get_board(), 3, WHITE, self)
-                self.ai_move(new_board)
-            self.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
-            self.draw_valid_moves(self.valid_moves)
-        elif self.menu.navigator == 2:
-            self.game_multiplayer.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
-            self.draw_valid_moves(self.game_multiplayer.valid_moves)
-        elif self.menu.navigator == 3:
-            self.analysis.start_analysis()
-            self.analysis.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
-        elif self.menu.navigator == 4:
-            self.settings.draw_settings_background(self.win)
-            pos = pygame.mouse.get_pos()
-            option = self.settings.get_option_from_mouse(pos)
-            if self.settings.navigator == 0:
-                self.settings.draw_settings_options(self.win, option)
-            elif self.settings.navigator == 1:
-                self.settings.draw_pieces_settings_options(self.win, option)
-            elif self.settings.navigator == 2:
-                self.settings.draw_squares_settings_options(self.win, option)
-        pygame.display.update()
-
     def _init(self):
         self.settings = Settings()
         self.selected = None
@@ -57,6 +27,13 @@ class Game:
         temp_board = deepcopy(self.board)
         self.moves.append(temp_board)
         self.game_multiplayer = Game_multiplayer()
+
+    def update(self):
+        if self.turn == WHITE:
+            value, new_board = minimax(self.get_board(), 3, WHITE, self)
+            self.ai_move(new_board)
+        self.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
+        self.draw_valid_moves(self.valid_moves)
 
     def winner(self):
         if self.board.winner() is not None:

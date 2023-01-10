@@ -18,6 +18,17 @@ class Settings:
         self.pieces_settings_button_icon = pygame.transform.scale(pygame.image.load('data/assets/pieces_settings_button_icon.png'), (65, 65))
         self.board_settings_button_icon = pygame.transform.scale(pygame.image.load('data/assets/board_settings_button_icon.png'), (65, 65))
 
+    def update(self, win):
+        self.draw_settings_background(win)
+        pos = pygame.mouse.get_pos()
+        option = self.get_option_from_mouse(pos)
+        if self.navigator == 0:
+            self.draw_settings_options(win, option)
+        elif self.navigator == 1:
+            self.draw_pieces_settings_options(win, option)
+        elif self.navigator == 2:
+            self.draw_squares_settings_options(win, option)
+
     def set_button_colors(self, option):
         if option == 1:
             self.button1_color = SELECTED_BUTTON_COLOR

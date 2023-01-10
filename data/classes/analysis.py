@@ -9,6 +9,10 @@ class Analysis:
         self.counter = 0
         self.moves = []
 
+    def update(self, win, settings):
+        self.start_analysis()
+        self.board.draw(win, settings.pieces_color, settings.squares_color)
+
     def start_analysis(self):
         self.moves = pickle.load(open("file.p", "rb"))
 

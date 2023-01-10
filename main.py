@@ -1,18 +1,38 @@
 import pygame
 from pygame.locals import *
 from data.classes.constants import WIDTH, HEIGHT, SQUARE_SIZE, WHITE, RED, FPS
-from data.classes.game import Game
 from data.classes.ads import Ads
+from data.classes.game import Game
+from data.classes.game_multiplayer import Game_multiplayer
+from data.classes.analysis import Analysis
+from data.classes.settings import Settings
 import pickle
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Checkers')
 
+
+def update(win, game):
+    if game.menu.navigator == 0:
+        game.menu.update(win)
+    elif game.menu.navigator == 1:
+        game.update()
+    elif game.menu.navigator == 2:
+        game.game_multiplayer.update(win, game.settings)
+    elif game.menu.navigator == 3:
+        game.analysis.update(win, game.settings)
+    elif game.menu.navigator == 4:
+        game.settings.update(win)
+    pygame.display.update()
+
 def main():
     run = True
     clock = pygame.time.Clock()
-    game = Game(WIN)
     ads = Ads(WIN)
+    game = Game(WIN)
+    game_multiplayer = Game_multiplayer()
+    analysis = Analysis()
+    settings = Settings()
 
     while run:
         clock.tick(FPS)
@@ -28,7 +48,7 @@ def main():
                         run = False
                     elif game.menu.navigator == 1:
                         game.menu.navigator = 0
-                        pickle.dump(game.moves, open("file.p", "wb" ))
+                        pickle.dump(game.moves, open("file.p", "wb"))
                     elif game.menu.navigator == 2 or game.menu.navigator == 3 or (game.menu.navigator == 4 and game.settings.navigator == 0):
                         game.menu.navigator = 0
                     elif game.menu.navigator == 4 and (game.settings.navigator == 1 or game.settings.navigator == 2):
@@ -57,7 +77,7 @@ def main():
                 elif game.menu.navigator == 5:
                     run = False
         if ads.status == False:
-            game.update()
+            update(WIN, game)
     pygame.quit()
 
 

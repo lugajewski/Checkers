@@ -9,13 +9,15 @@ class Game_multiplayer():
         self._init()
 
     def _init(self):
-        self.settings = Settings()
         self.selected = None
         self.board = Board()
         self.turn = RED
         self.valid_moves = {}
         self.last_board = self.board.board
 
+    def update(self, win, settings):
+        self.board.draw(win, settings.pieces_color, settings.squares_color)
+        self.draw_valid_moves(win, self.valid_moves)
 
     def reset(self):
         self._init()
@@ -48,10 +50,10 @@ class Game_multiplayer():
 
         return True
 
-    def draw_valid_moves(self, moves):
+    def draw_valid_moves(self, win, moves):
         for move in moves:
             row, col = move
-            pygame.draw.circle(self.win, BLUE,
+            pygame.draw.circle(win, BLUE,
                                (col * SQUARE_SIZE + SQUARE_SIZE // 2, row * SQUARE_SIZE + SQUARE_SIZE // 2), 15)
 
     def change_turn(self):
