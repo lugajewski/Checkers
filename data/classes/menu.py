@@ -3,7 +3,8 @@ from .constants import HEIGHT, WIDTH, WHITE, RED, BACKGROUND_COLOR, BUTTON_COLOR
 
 
 class Menu:
-    def __init__(self):
+    def __init__(self, win):
+        self.win = win
         self.button_width = HEIGHT//2
         self.space_height = (HEIGHT - HEIGHT // 4) / 16
         self.button_height = self.space_height*2
@@ -21,11 +22,11 @@ class Menu:
         self.settings_button_icon = pygame.transform.scale(pygame.image.load('data/assets/settings_button_icon.png'), (65, 65))
         self.exit_button_icon = pygame.transform.scale(pygame.image.load('data/assets/exit_button_icon.png'), (65, 65))
 
-    def update(self, win):
-        self.draw_background(win)
+    def update(self):
+        self.draw_background(self.win)
         pos = pygame.mouse.get_pos()
         option = self.get_option_from_mouse(pos)
-        self.draw_options(win, option)
+        self.draw_options(self.win, option)
 
     def set_button_colors(self, option):
         if option == 1:
@@ -88,18 +89,6 @@ class Menu:
         win.blit(tekst, (WIDTH // 4 + self.text_offset, HEIGHT // 4 + 6 * self.space_height + 4 * self.button_height - font.get_height() // 2))
         win.blit(self.exit_button_icon, (WIDTH // 4 + self.icon_offset, HEIGHT // 4 + 5 * self.space_height + 4 * self.button_height + self.icon_offset))
 
-    def draw_result(self, win, result):
-        pygame.draw.rect(win, BACKGROUND_COLOR, (0, 0, WIDTH, HEIGHT))
-        if not pygame.font.get_init():
-            pygame.font.init()
-        font = pygame.font.Font("data/assets/arial1.ttf", 50)
-        if result == RED:
-            tekst = font.render("Czerwone wygraly", False, TEXT_COLOR)
-        if result == WHITE:
-            tekst = font.render("Biale wygraly", False, TEXT_COLOR)
-        win.blit(tekst, (WIDTH//5, HEIGHT//2))
-        pygame.display.update()
-        pygame.time.wait(3000)
 
     def get_option_from_mouse(self, pos):
         x, y = pos

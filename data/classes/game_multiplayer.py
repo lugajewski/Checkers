@@ -5,7 +5,8 @@ from .constants import *
 from .settings import Settings
 
 class Game_multiplayer():
-    def __init__(self):
+    def __init__(self, win):
+        self.win = win
         self._init()
 
     def _init(self):
@@ -15,9 +16,15 @@ class Game_multiplayer():
         self.valid_moves = {}
         self.last_board = self.board.board
 
-    def update(self, win, settings):
-        self.board.draw(win, settings.pieces_color, settings.squares_color)
-        self.draw_valid_moves(win, self.valid_moves)
+    def update(self, light_pieces_color, dark_pieces_color, light_squares_color, dark_squares_color):
+        self.board.draw(self.win, light_pieces_color, dark_pieces_color, light_squares_color, dark_squares_color)
+        self.draw_valid_moves(self.win, self.valid_moves)
+
+    def winner(self):
+        if self.board.winner() is not None:
+            self.board.draw_result(self.win, self.board.winner())
+            self.reset()
+        return self.board.winner()
 
     def reset(self):
         self._init()
@@ -53,8 +60,7 @@ class Game_multiplayer():
     def draw_valid_moves(self, win, moves):
         for move in moves:
             row, col = move
-            pygame.draw.circle(win, BLUE,
-                               (col * SQUARE_SIZE + SQUARE_SIZE // 2, row * SQUARE_SIZE + SQUARE_SIZE // 2), 15)
+            pygame.draw.circle(win, BLUE, (col * SQUARE_SIZE + SQUARE_SIZE // 2, row * SQUARE_SIZE + SQUARE_SIZE // 2), 15)
 
     def change_turn(self):
         self.valid_moves = {}

@@ -3,7 +3,8 @@ from .constants import HEIGHT, WIDTH, BLACK, WHITE, RED, BLUE, GREY, BROWN, BACK
 
 
 class Settings:
-    def __init__(self):
+    def __init__(self, win):
+        self.win = win
         self.button_width = HEIGHT // 2
         self.space_height = (HEIGHT - HEIGHT // 4) / 16
         self.button_height = self.space_height * 2
@@ -13,21 +14,23 @@ class Settings:
         self.button2_color = BUTTON_COLOR
         self.text = WHITE
         self.navigator = 0
-        self.pieces_color = RED
-        self.squares_color = RED
+        self.light_pieces_color = RED
+        self.dark_pieces_color = WHITE
+        self.light_squares_color = RED
+        self.dark_squares_color = BLACK
         self.pieces_settings_button_icon = pygame.transform.scale(pygame.image.load('data/assets/pieces_settings_button_icon.png'), (65, 65))
         self.board_settings_button_icon = pygame.transform.scale(pygame.image.load('data/assets/board_settings_button_icon.png'), (65, 65))
 
-    def update(self, win):
-        self.draw_settings_background(win)
+    def update(self):
+        self.draw_settings_background(self.win)
         pos = pygame.mouse.get_pos()
         option = self.get_option_from_mouse(pos)
         if self.navigator == 0:
-            self.draw_settings_options(win, option)
+            self.draw_settings_options(self.win, option)
         elif self.navigator == 1:
-            self.draw_pieces_settings_options(win, option)
+            self.draw_pieces_settings_options(self.win, option)
         elif self.navigator == 2:
-            self.draw_squares_settings_options(win, option)
+            self.draw_squares_settings_options(self.win, option)
 
     def set_button_colors(self, option):
         if option == 1:
@@ -131,11 +134,11 @@ class Settings:
                 self.navigator = option
         elif self.navigator == 1:
             if option == 1:
-                self.pieces_color = RED
+                self.light_pieces_color = RED
             elif option == 2:
-                self.pieces_color = BROWN
+                self.light_pieces_color = BROWN
         elif self.navigator == 2:
             if option == 1:
-                self.squares_color = RED
+                self.light_squares_color = RED
             elif option == 2:
-                self.squares_color = BROWN
+                self.light_squares_color = BROWN

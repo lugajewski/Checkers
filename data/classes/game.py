@@ -2,10 +2,6 @@ from copy import deepcopy
 import pygame
 from .constants import SQUARE_SIZE, WHITE, RED, BLUE
 from .board import Board
-from .menu import Menu
-from .settings import Settings
-from .analysis import Analysis
-from .game_multiplayer import Game_multiplayer
 from .AI import minimax
 
 
@@ -15,29 +11,25 @@ class Game:
         self._init()
 
     def _init(self):
-        self.settings = Settings()
         self.selected = None
         self.board = Board()
-        self.analysis = Analysis()
         self.turn = RED
         self.valid_moves = {}
-        self.menu = Menu()
         self.online = False
         self.moves = []
         temp_board = deepcopy(self.board)
         self.moves.append(temp_board)
-        self.game_multiplayer = Game_multiplayer()
 
-    def update(self):
+    def update(self, light_pieces_color, dark_pieces_color, light_squares_color, dark_squares_color):
         if self.turn == WHITE:
             value, new_board = minimax(self.get_board(), 3, WHITE, self)
             self.ai_move(new_board)
-        self.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
+        self.board.draw(self.win, light_pieces_color, dark_pieces_color, light_squares_color, dark_squares_color)
         self.draw_valid_moves(self.valid_moves)
 
     def winner(self):
         if self.board.winner() is not None:
-            self.menu.draw_result(self.win, self.board.winner())
+            self.board.draw_result(self.win, self.board.winner())
             self.reset()
         return self.board.winner()
 
@@ -94,6 +86,7 @@ class Game:
         temp_board = deepcopy(self.board)
         self.moves.append(temp_board)
         self.change_turn()
+
 
     def get_row_col_from_mouse(self, pos):
         x, y = pos

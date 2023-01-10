@@ -1,5 +1,5 @@
 import pygame
-from .constants import BLACK, ROWS, RED, SQUARE_SIZE, COLS, WHITE, BROWN
+from .constants import BLACK, ROWS, RED, SQUARE_SIZE, COLS, WHITE, BACKGROUND_COLOR, TEXT_COLOR, WIDTH, HEIGHT
 from .piece import Piece
 
 
@@ -8,15 +8,15 @@ class Board:
         self.board = []
         self.red_left = self.white_left = 12
         self.red_kings = self.white_kings = 0
-        self.create_board(RED)
+        self.create_board()
         self.background_color = BLACK
         self.squares_color = RED
 
-    def draw_squares(self, win, squares_color):
-        win.fill(self.background_color)
+    def draw_squares(self, win, light_squares_color, dark_squares_color):
+        win.fill(dark_squares_color)
         for row in range(ROWS):
             for col in range(row % 2, COLS, 2):
-                pygame.draw.rect(win, squares_color, (row * SQUARE_SIZE, col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+                pygame.draw.rect(win, light_squares_color, (row * SQUARE_SIZE, col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
     def evaluate(self):
         return self.white_left - self.red_left + (self.white_kings * 0.5 - self.red_kings * 0.5)
@@ -43,7 +43,7 @@ class Board:
     def get_piece(self, row, col):
         return self.board[row][col]
 
-    def create_board(self, red_pieces_color):
+    def create_board(self):
         for row in range(ROWS):
             self.board.append([])
             for col in range(COLS):
@@ -57,13 +57,13 @@ class Board:
                 else:
                     self.board[row].append(0)
 
-    def draw(self, win, pieces_color, squares_color):
-        self.draw_squares(win, squares_color)
+    def draw(self, win, light_pieces_color, dark_pieces_color, light_squares_color, dark_squares_color):
+        self.draw_squares(win, light_squares_color, dark_squares_color)
         for row in range(ROWS):
             for col in range(COLS):
                 piece = self.board[row][col]
                 if piece != 0:
-                    piece.draw(win, pieces_color)
+                    piece.draw(win, light_pieces_color, dark_pieces_color)
 
     def remove(self, pieces):
         for piece in pieces:
@@ -81,6 +81,19 @@ class Board:
             return RED
 
         return None
+
+    def draw_result(self, win, result):
+        pygame.draw.rect(win, BACKGROUND_COLOR, (0, 0, WIDTH, HEIGHT))
+        if not pygame.font.get_init():
+            pygame.font.init()
+        font = pygame.font.Font("data/assets/arial1.ttf", 50)
+        if result == RED:
+            tekst = font.render("Czerwone wygraly", False, TEXT_COLOR)
+        if result == WHITE:
+            tekst = font.render("Biale wygraly", False, TEXT_COLOR)
+        win.blit(tekst, (WIDTH//5, HEIGHT//2))
+        pygame.display.update()
+        pygame.time.wait(3000)
 
     def get_valid_moves(self, piece):
         moves = {}

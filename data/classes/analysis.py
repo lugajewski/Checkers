@@ -4,14 +4,15 @@ from .board import Board
 import pickle
 
 class Analysis:
-    def __init__(self):
+    def __init__(self, win):
+        self.win = win
         self.board = Board()
         self.counter = 0
         self.moves = []
 
-    def update(self, win, settings):
+    def update(self, light_pieces_color, dark_pieces_color, light_squares_color, dark_squares_color):
         self.start_analysis()
-        self.board.draw(win, settings.pieces_color, settings.squares_color)
+        self.board.draw(self.win, light_pieces_color, dark_pieces_color, light_squares_color, dark_squares_color)
 
     def start_analysis(self):
         self.moves = pickle.load(open("file.p", "rb"))
