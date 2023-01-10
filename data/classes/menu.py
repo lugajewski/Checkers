@@ -1,5 +1,5 @@
 import pygame
-from .constants import HEIGHT, WIDTH, WHITE, RED, BACKGROUND_COLOR, BUTTON_COLOR, SELECTED_BUTTON_COLOR, TEXT_COLOR
+from .constants import HEIGHT, WIDTH, BACKGROUND_COLOR, BUTTON_COLOR, SELECTED_BUTTON_COLOR, TEXT_COLOR
 
 
 class Menu:
@@ -11,6 +11,8 @@ class Menu:
         self.text_offset = self.button_height
         self.icon_offset = 5
         self.navigator = 0
+        self.game = False
+        self.difficulty = 1
         self.start_button_color = BUTTON_COLOR
         self.multiplayer_button_color = BUTTON_COLOR
         self.analysis_button_color = BUTTON_COLOR
@@ -26,7 +28,10 @@ class Menu:
         self.draw_background(self.win)
         pos = pygame.mouse.get_pos()
         option = self.get_option_from_mouse(pos)
-        self.draw_options(self.win, option)
+        if self.game == False:
+            self.draw_options(self.win, option)
+        else:
+            self.draw_difficulty_level_options(self.win, option)
 
     def set_button_colors(self, option):
         if option == 1:
@@ -68,7 +73,7 @@ class Menu:
         tekst = font.render("Start", False, TEXT_COLOR)
         win.blit(tekst, (WIDTH //4 + self.text_offset, HEIGHT // 4 + 2 * self.space_height - font.get_height() // 2))
         win.blit(self.start_button_icon, (WIDTH // 4 + self.icon_offset, HEIGHT // 4 + self.space_height + self.icon_offset))
-        # online
+        # multiplayer
         pygame.draw.rect(win, self.multiplayer_button_color, (WIDTH//4, HEIGHT//4 + 2 * self.space_height + self.button_height, self.button_width, self.button_height))
         tekst = font.render("Multiplayer", False, TEXT_COLOR)
         win.blit(tekst, (WIDTH // 4 + self.text_offset, HEIGHT // 4 + 3 * self.space_height + self.button_height - font.get_height() // 2))
@@ -89,6 +94,38 @@ class Menu:
         win.blit(tekst, (WIDTH // 4 + self.text_offset, HEIGHT // 4 + 6 * self.space_height + 4 * self.button_height - font.get_height() // 2))
         win.blit(self.exit_button_icon, (WIDTH // 4 + self.icon_offset, HEIGHT // 4 + 5 * self.space_height + 4 * self.button_height + self.icon_offset))
 
+    def draw_difficulty_level_options(self, win, option):
+        if not pygame.font.get_init():
+            pygame.font.init()
+
+        self.set_button_colors(option)
+
+        font = pygame.font.Font("data/assets/broadway.ttf", 90)
+        # header
+        tekst = font.render("SUPER", False, TEXT_COLOR)
+        win.blit(tekst, (243.35, font.get_height() // 2))
+        tekst = font.render("CHECKERS", False, TEXT_COLOR)
+        win.blit(tekst, (148.25, font.get_height() + font.get_height() // 2))
+
+        font = pygame.font.Font("data/assets/broadway.ttf", 40)
+        # easy
+        pygame.draw.rect(win, self.start_button_color, (WIDTH // 4, HEIGHT // 4 + self.space_height, self.button_width, self.button_height))
+        tekst = font.render("Easy", False, TEXT_COLOR)
+        win.blit(tekst, (WIDTH //4 + self.text_offset, HEIGHT // 4 + 2 * self.space_height - font.get_height() // 2))
+        win.blit(self.start_button_icon, (WIDTH // 4 + self.icon_offset, HEIGHT // 4 + self.space_height + self.icon_offset))
+        # medium
+        pygame.draw.rect(win, self.multiplayer_button_color, (WIDTH//4, HEIGHT//4 + 2 * self.space_height + self.button_height, self.button_width, self.button_height))
+        tekst = font.render("Medium", False, TEXT_COLOR)
+        win.blit(tekst, (WIDTH // 4 + self.text_offset, HEIGHT // 4 + 3 * self.space_height + self.button_height - font.get_height() // 2))
+        win.blit(self.multiplayer_button_icon, (WIDTH // 4 + self.icon_offset, HEIGHT//4 + 2 * self.space_height + self.button_height + self.icon_offset))
+        # hard
+        pygame.draw.rect(win, self.analysis_button_color, (WIDTH // 4, HEIGHT // 4 + 3 * self.space_height + 2 * self.button_height, self.button_width,
+        self.button_height))
+        tekst = font.render("Hard", False, TEXT_COLOR)
+        win.blit(tekst, (WIDTH // 4 + self.text_offset, HEIGHT // 4 + 4 * self.space_height + 2 * self.button_height - font.get_height() // 2))
+        win.blit(self.analysis_button_icon, (WIDTH // 4 + self.icon_offset, HEIGHT // 4 + 3 * self.space_height + 2 * self.button_height + self.icon_offset))
+
+
 
     def get_option_from_mouse(self, pos):
         x, y = pos
@@ -105,5 +142,15 @@ class Menu:
             option = 5
         return option
 
-    def chose_options(self, option, game):
-        self.navigator = option
+    def chose_options(self, option):
+        if self.game == False:
+            if option == 1:
+                self.game = True
+                return
+            else:
+                self.navigator = option
+        if self.game == True:
+            self.difficulty = option
+            self.navigator = 1
+
+

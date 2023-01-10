@@ -2,7 +2,6 @@ from copy import deepcopy
 import pygame
 from .constants import SQUARE_SIZE, WHITE, RED, BLUE
 from .board import Board
-from .AI import minimax
 
 
 class Game:
@@ -21,9 +20,6 @@ class Game:
         self.moves.append(temp_board)
 
     def update(self, light_pieces_color, dark_pieces_color, light_squares_color, dark_squares_color):
-        if self.turn == WHITE:
-            value, new_board = minimax(self.get_board(), 3, WHITE, self)
-            self.ai_move(new_board)
         self.board.draw(self.win, light_pieces_color, dark_pieces_color, light_squares_color, dark_squares_color)
         self.draw_valid_moves(self.valid_moves)
 

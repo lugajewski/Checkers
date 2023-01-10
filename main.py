@@ -7,6 +7,7 @@ from data.classes.game import Game
 from data.classes.game_multiplayer import Game_multiplayer
 from data.classes.analysis import Analysis
 from data.classes.settings import Settings
+from data.classes.AI import minimax
 import pickle
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -16,7 +17,7 @@ def update(menu, game, game_multiplayer, analysis, settings):
     if menu.navigator == 0:
         menu.update()
     elif menu.navigator == 1:
-        game.update(settings.light_pieces_color, settings.dark_pieces_color, settings.light_squares_color, settings.dark_squares_color)
+        game.update(menu.difficulty, settings.light_pieces_color, settings.dark_pieces_color, settings.light_squares_color, settings.dark_squares_color)
     elif menu.navigator == 2:
         game_multiplayer.update(settings.light_pieces_color, settings.dark_pieces_color, settings.light_squares_color, settings.dark_squares_color)
     elif menu.navigator == 3:
@@ -37,6 +38,10 @@ def main():
 
     while run:
         clock.tick(FPS)
+
+        if game.turn == WHITE:
+            value, new_board = minimax(game.get_board(), menu.difficulty, WHITE, game)
+            game.ai_move(new_board)
 
         if game.winner() is not None:
             print(game.winner())
@@ -69,7 +74,7 @@ def main():
                 pos = pygame.mouse.get_pos()
                 if menu.navigator == 0:
                     option = menu.get_option_from_mouse(pos)
-                    menu.chose_options(option, game)
+                    menu.chose_options(option)
                 elif menu.navigator == 1:
                     row, col = game.get_row_col_from_mouse(pos)
                     game.select(row, col)
