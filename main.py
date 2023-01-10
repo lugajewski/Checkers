@@ -17,7 +17,7 @@ def update(menu, game, game_multiplayer, analysis, settings):
     if menu.navigator == 0:
         menu.update()
     elif menu.navigator == 1:
-        game.update(menu.difficulty, settings.light_pieces_color, settings.dark_pieces_color, settings.light_squares_color, settings.dark_squares_color)
+        game.update(settings.light_pieces_color, settings.dark_pieces_color, settings.light_squares_color, settings.dark_squares_color)
     elif menu.navigator == 2:
         game_multiplayer.update(settings.light_pieces_color, settings.dark_pieces_color, settings.light_squares_color, settings.dark_squares_color)
     elif menu.navigator == 3:
@@ -55,7 +55,10 @@ def main():
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     if menu.navigator == 0:
-                        run = False
+                        if menu.game == False:
+                            run = False
+                        else:
+                            menu.game = False
                     elif menu.navigator == 1:
                         menu.navigator = 0
                         pickle.dump(game.moves, open("file.p", "wb"))
@@ -82,8 +85,15 @@ def main():
                     row, col = game.get_row_col_from_mouse(pos)
                     game_multiplayer.select(row, col)
                 elif menu.navigator == 4:
-                    option = settings.get_option_from_mouse(pos)
-                    settings.chose_options(option, game)
+                    if settings.navigator == 0:
+                        option = settings.get_first_option_from_mouse(pos)
+                        settings.choose_options(option)
+                    elif settings.navigator == 1:
+                        option = settings.get_first_option_from_mouse(pos)
+                        settings.choose_options(option)
+                    elif settings.navigator == 2:
+                        option = settings.get_second_option_from_mouse(pos)
+                        settings.choose_options(option)
                 elif menu.navigator == 5:
                     run = False
         if ads.status == False:
