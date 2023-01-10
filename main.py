@@ -2,7 +2,6 @@ import pygame
 from pygame.locals import *
 from data.classes.constants import WIDTH, HEIGHT, SQUARE_SIZE, WHITE, RED, FPS
 from data.classes.game import Game
-from data.classes.AI import minimax
 from data.classes.ads import Ads
 import pickle
 
@@ -17,10 +16,6 @@ def main():
 
     while run:
         clock.tick(FPS)
-
-        if game.turn == WHITE:
-            value, new_board = minimax(game.get_board(), 3, WHITE, game)
-            game.ai_move(new_board)
 
         if game.winner() is not None:
             print(game.winner())

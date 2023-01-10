@@ -6,7 +6,7 @@ from .menu import Menu
 from .settings import Settings
 from .analysis import Analysis
 from .game_multiplayer import Game_multiplayer
-import pickle
+from .AI import minimax
 
 
 class Game:
@@ -21,6 +21,9 @@ class Game:
             option = self.menu.get_option_from_mouse(pos)
             self.menu.draw_options(self.win, option)
         elif self.menu.navigator == 1:
+            if self.turn == WHITE:
+                value, new_board = minimax(self.get_board(), 3, WHITE, self)
+                self.ai_move(new_board)
             self.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
             self.draw_valid_moves(self.valid_moves)
         elif self.menu.navigator == 2:
