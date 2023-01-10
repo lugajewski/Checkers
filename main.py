@@ -86,13 +86,13 @@ def main():
                     game_multiplayer.select(row, col)
                 elif menu.navigator == 4:
                     if settings.navigator == 0:
-                        option = settings.get_first_option_from_mouse(pos)
+                        option = settings.get_option_from_mouse(pos)
                         settings.choose_options(option)
                     elif settings.navigator == 1:
-                        option = settings.get_second_option_from_mouse(pos)
+                        option = settings.get_detailed_option_from_mouse(pos)
                         settings.choose_options(option)
                     elif settings.navigator == 2:
-                        option = settings.get_second_option_from_mouse(pos)
+                        option = settings.get_detailed_option_from_mouse(pos)
                         settings.choose_options(option)
                 elif menu.navigator == 5:
                     run = False

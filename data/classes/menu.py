@@ -23,6 +23,9 @@ class Menu:
         self.analysis_button_icon = pygame.transform.scale(pygame.image.load('data/assets/analysis_button_icon.png'), (65, 65))
         self.settings_button_icon = pygame.transform.scale(pygame.image.load('data/assets/settings_button_icon.png'), (65, 65))
         self.exit_button_icon = pygame.transform.scale(pygame.image.load('data/assets/exit_button_icon.png'), (65, 65))
+        self.easy_button_icon = pygame.transform.scale(pygame.image.load('data/assets/easy_button_icon.png'), (65, 65))
+        self.medium_button_icon = pygame.transform.scale(pygame.image.load('data/assets/medium_button_icon.png'), (65, 65))
+        self.hard_button_icon = pygame.transform.scale(pygame.image.load('data/assets/hard_button_icon.png'), (65, 65))
 
     def update(self):
         self.draw_background(self.win)
@@ -112,18 +115,18 @@ class Menu:
         pygame.draw.rect(win, self.start_button_color, (WIDTH // 4, HEIGHT // 4 + self.space_height, self.button_width, self.button_height))
         tekst = font.render("Easy", False, TEXT_COLOR)
         win.blit(tekst, (WIDTH //4 + self.text_offset, HEIGHT // 4 + 2 * self.space_height - font.get_height() // 2))
-        win.blit(self.start_button_icon, (WIDTH // 4 + self.icon_offset, HEIGHT // 4 + self.space_height + self.icon_offset))
+        win.blit(self.easy_button_icon, (WIDTH // 4 + self.icon_offset, HEIGHT // 4 + self.space_height + self.icon_offset))
         # medium
         pygame.draw.rect(win, self.multiplayer_button_color, (WIDTH//4, HEIGHT//4 + 2 * self.space_height + self.button_height, self.button_width, self.button_height))
         tekst = font.render("Medium", False, TEXT_COLOR)
         win.blit(tekst, (WIDTH // 4 + self.text_offset, HEIGHT // 4 + 3 * self.space_height + self.button_height - font.get_height() // 2))
-        win.blit(self.multiplayer_button_icon, (WIDTH // 4 + self.icon_offset, HEIGHT//4 + 2 * self.space_height + self.button_height + self.icon_offset))
+        win.blit(self.medium_button_icon, (WIDTH // 4 + self.icon_offset, HEIGHT//4 + 2 * self.space_height + self.button_height + self.icon_offset))
         # hard
         pygame.draw.rect(win, self.analysis_button_color, (WIDTH // 4, HEIGHT // 4 + 3 * self.space_height + 2 * self.button_height, self.button_width,
         self.button_height))
         tekst = font.render("Hard", False, TEXT_COLOR)
         win.blit(tekst, (WIDTH // 4 + self.text_offset, HEIGHT // 4 + 4 * self.space_height + 2 * self.button_height - font.get_height() // 2))
-        win.blit(self.analysis_button_icon, (WIDTH // 4 + self.icon_offset, HEIGHT // 4 + 3 * self.space_height + 2 * self.button_height + self.icon_offset))
+        win.blit(self.hard_button_icon, (WIDTH // 4 + self.icon_offset, HEIGHT // 4 + 3 * self.space_height + 2 * self.button_height + self.icon_offset))
 
 
 

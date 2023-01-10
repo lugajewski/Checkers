@@ -1,16 +1,14 @@
 import pygame
-from .constants import BLACK, ROWS, RED, SQUARE_SIZE, COLS, WHITE, BACKGROUND_COLOR, TEXT_COLOR, WIDTH, HEIGHT
+from .constants import ROWS, RED, SQUARE_SIZE, COLS, WHITE, BACKGROUND_COLOR, TEXT_COLOR, WIDTH, HEIGHT, OUTLINE_COLOR
 from .piece import Piece
 
 
 class Board:
     def __init__(self):
         self.board = []
-        self.red_left = self.white_left = 12
-        self.red_kings = self.white_kings = 0
+        self.light_left = self.dark_left = 12
+        self.light_kings = self.dark_kings = 0
         self.create_board()
-        self.background_color = BLACK
-        self.squares_color = RED
 
     def draw_squares(self, win, light_squares_color, dark_squares_color):
         win.fill(dark_squares_color)
@@ -19,7 +17,7 @@ class Board:
                 pygame.draw.rect(win, light_squares_color, (row * SQUARE_SIZE, col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
     def evaluate(self):
-        return self.white_left - self.red_left + (self.white_kings * 0.5 - self.red_kings * 0.5)
+        return self.dark_left - self.light_left + (self.dark_kings * 0.5 - self.light_kings * 0.5)
 
     def get_all_pieces(self, color):
         pieces = []
@@ -36,9 +34,9 @@ class Board:
         if row == ROWS - 1 or row == 0:
             piece.make_king()
             if piece.color == WHITE:
-                self.white_kings += 1
+                self.dark_kings += 1
             else:
-                self.red_kings += 1
+                self.light_kings += 1
 
     def get_piece(self, row, col):
         return self.board[row][col]
@@ -63,21 +61,22 @@ class Board:
             for col in range(COLS):
                 piece = self.board[row][col]
                 if piece != 0:
-                    piece.draw(win, light_pieces_color, dark_pieces_color)
+                    piece.draw(win, light_pieces_color, dark_pieces_color, OUTLINE_COLOR)
+
 
     def remove(self, pieces):
         for piece in pieces:
             self.board[piece.row][piece.col] = 0
             if piece != 0:
                 if piece.color == RED:
-                    self.red_left -= 1
+                    self.light_left -= 1
                 else:
-                    self.white_left -= 1
+                    self.dark_left -= 1
 
     def winner(self):
-        if self.red_left <= 0:
+        if self.light_left <= 0:
             return WHITE
-        elif self.white_left <= 0:
+        elif self.dark_left <= 0:
             return RED
 
         return None
@@ -88,9 +87,9 @@ class Board:
             pygame.font.init()
         font = pygame.font.Font("data/assets/arial1.ttf", 50)
         if result == RED:
-            tekst = font.render("Czerwone wygraly", False, TEXT_COLOR)
+            tekst = font.render("You won!", False, TEXT_COLOR)
         if result == WHITE:
-            tekst = font.render("Biale wygraly", False, TEXT_COLOR)
+            tekst = font.render("You lost!", False, TEXT_COLOR)
         win.blit(tekst, (WIDTH//5, HEIGHT//2))
         pygame.display.update()
         pygame.time.wait(3000)

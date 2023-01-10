@@ -1,4 +1,4 @@
-from .constants import SQUARE_SIZE, GREY, CROWN, WHITE
+from .constants import SQUARE_SIZE, CROWN, WHITE
 import pygame
 
 
@@ -14,7 +14,6 @@ class Piece:
         self.x = 0
         self.y = 0
         self.calc_pos()
-        self.outline_color = GREY
 
     def calc_pos(self):
         self.x = SQUARE_SIZE * self.col + SQUARE_SIZE // 2
@@ -23,9 +22,9 @@ class Piece:
     def make_king(self):
         self.king = True
 
-    def draw(self, win, light_pieces_color, dark_pieces_color):
+    def draw(self, win, light_pieces_color, dark_pieces_color, outline_color):
         radius = SQUARE_SIZE // 2 - self.PADDING
-        pygame.draw.circle(win, self.outline_color, (self.x, self.y), radius + self.OUTLINE)
+        pygame.draw.circle(win, outline_color, (self.x, self.y), radius + self.OUTLINE)
         if self.color == WHITE:
             pygame.draw.circle(win, dark_pieces_color, (self.x, self.y), radius)
         else:
