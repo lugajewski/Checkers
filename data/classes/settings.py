@@ -8,12 +8,15 @@ class Settings:
         self.space_height = (HEIGHT - HEIGHT // 4) / 16
         self.button_height = self.space_height * 2
         self.text_offset = self.button_height
+        self.icon_offset = 5
         self.button1_color = BUTTON_COLOR
         self.button2_color = BUTTON_COLOR
         self.text = WHITE
         self.navigator = 0
         self.pieces_color = RED
         self.squares_color = RED
+        self.pieces_settings_button_icon = pygame.transform.scale(pygame.image.load('data/assets/pieces_settings_button_icon.png'), (65, 65))
+        self.board_settings_button_icon = pygame.transform.scale(pygame.image.load('data/assets/board_settings_button_icon.png'), (65, 65))
 
     def set_button_colors(self, option):
         if option == 1:
@@ -45,10 +48,12 @@ class Settings:
         pygame.draw.rect(win, self.button1_color, (WIDTH // 4, HEIGHT // 4 + self.space_height, self.button_width, self.button_height))
         tekst = font.render("Pieces settings", False, TEXT_COLOR)
         win.blit(tekst, (WIDTH //4 + self.text_offset, HEIGHT // 4 + 2 * self.space_height - font.get_height() // 2))
+        win.blit(self.pieces_settings_button_icon, (WIDTH // 4 + self.icon_offset, HEIGHT // 4 + self.space_height + self.icon_offset))
         # board settings button
         pygame.draw.rect(win, self.button2_color, (WIDTH//4, HEIGHT//4 + 2 * self.space_height + self.button_height, self.button_width, self.button_height))
         tekst = font.render("Board settings", False, TEXT_COLOR)
         win.blit(tekst, (WIDTH // 4 + self.text_offset, HEIGHT // 4 + 3 * self.space_height + self.button_height - font.get_height() // 2))
+        win.blit(self.board_settings_button_icon, (WIDTH // 4 + self.icon_offset, HEIGHT // 4 + 2 * self.space_height + self.button_height + self.icon_offset))
 
     def draw_pieces_settings_options(self, win, option):
         if not pygame.font.get_init():
