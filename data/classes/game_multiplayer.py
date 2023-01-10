@@ -2,16 +2,11 @@ import pygame.event
 from copy import deepcopy
 from .board import Board
 from .constants import *
-from .network import Network
 from .settings import Settings
-class Game_online():
+
+class Game_multiplayer():
     def __init__(self):
         self._init()
-
-    def update(self):
-        self.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
-        self.draw_valid_moves(self.valid_moves)
-        pygame.display.update()
 
     def _init(self):
         self.settings = Settings()
@@ -19,8 +14,6 @@ class Game_online():
         self.board = Board()
         self.turn = RED
         self.valid_moves = {}
-        self.network = Network()
-        self.side = self.network.getP()
         self.last_board = self.board.board
 
 
@@ -71,26 +64,8 @@ class Game_online():
     def get_board(self):
         return self.board
 
-    def ai_move(self, board):
-        self.board = board
-        self.change_turn()
-
     def get_row_col_from_mouse(self, pos):
         x, y = pos
         row = y // SQUARE_SIZE
         col = x // SQUARE_SIZE
         return row, col
-
-    def get_option_from_mouse(self, pos):
-        x, y = pos
-        option = 0
-        if 0 < y < 300:
-            option = 1
-        if 300 < y < 600:
-            option = 2
-        if y > 600:
-            option = 3
-        return option
-
-
-

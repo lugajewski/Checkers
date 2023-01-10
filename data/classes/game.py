@@ -5,8 +5,7 @@ from .board import Board
 from .menu import Menu
 from .settings import Settings
 from .analysis import Analysis
-from .game_online import Game_online
-from .network import Network
+from .game_multiplayer import Game_multiplayer
 import pickle
 
 
@@ -25,8 +24,8 @@ class Game:
             self.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
             self.draw_valid_moves(self.valid_moves)
         elif self.menu.navigator == 2:
-            self.game_online.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
-            self.draw_valid_moves(self.game_online.valid_moves)
+            self.game_multiplayer.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
+            self.draw_valid_moves(self.game_multiplayer.valid_moves)
         elif self.menu.navigator == 3:
             self.analysis.start_analysis()
             self.analysis.board.draw(self.win, self.settings.pieces_color, self.settings.squares_color)
@@ -54,7 +53,7 @@ class Game:
         self.moves = []
         temp_board = deepcopy(self.board)
         self.moves.append(temp_board)
-        self.game_online = Game_online()
+        self.game_multiplayer = Game_multiplayer()
 
     def winner(self):
         if self.board.winner() is not None:
@@ -121,18 +120,3 @@ class Game:
         row = y // SQUARE_SIZE
         col = x // SQUARE_SIZE
         return row, col
-
-    def get_option_from_mouse(self, pos):
-        x, y = pos
-        option = 0
-        if 0 < y < 300:
-            option = 1
-        if 300 < y < 600:
-            option = 2
-        if y > 600:
-            option = 3
-        return option
-
-    def _init_game_online(self):
-        self.game_online = Game_online(self.win, self)
-        self.game_online.start_online_game()

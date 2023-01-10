@@ -5,7 +5,6 @@ from data.classes.game import Game
 from data.classes.AI import minimax
 from data.classes.ads import Ads
 import pickle
-from copy import deepcopy
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Checkers')
@@ -55,14 +54,10 @@ def main():
                     row, col = game.get_row_col_from_mouse(pos)
                     game.select(row, col)
                 elif game.menu.navigator == 2:
-                    #game.game_online.board.board = deepcopy(game.game_online.network.get_board())
-                    if game.game_online.turn == RED:
-                        row, col = game.get_row_col_from_mouse(pos)
-                        temp = game.game_online.select(row, col)
-                        if temp:
-                            game.game_online.network.send_board(deepcopy(game.game_online.board.board))
+                    row, col = game.get_row_col_from_mouse(pos)
+                    game.game_multiplayer.select(row, col)
                 elif game.menu.navigator == 4:
-                    option = game.get_option_from_mouse(pos)
+                    option = game.settings.get_option_from_mouse(pos)
                     game.settings.chose_options(option, game)
                 elif game.menu.navigator == 5:
                     run = False
