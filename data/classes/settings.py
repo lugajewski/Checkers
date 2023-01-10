@@ -1,5 +1,5 @@
 import pygame
-from .constants import HEIGHT, WIDTH, SQUARE_SIZE, WHITE, RED, BROWN, BACKGROUND_COLOR, BUTTON_COLOR, \
+from .constants import HEIGHT, WIDTH, SQUARE_SIZE, WHITE, RED, BROWN, GREY, BACKGROUND_COLOR, BUTTON_COLOR, \
     SELECTED_BUTTON_COLOR, TEXT_COLOR, LIGHT_SQUARES_COLOR1, LIGHT_SQUARES_COLOR2, LIGHT_SQUARES_COLOR3, LIGHT_SQUARES_COLOR4, \
     LIGHT_SQUARES_COLOR5, LIGHT_SQUARES_COLOR6, DARK_SQUARES_COLOR1, DARK_SQUARES_COLOR2, DARK_SQUARES_COLOR3, DARK_SQUARES_COLOR4, \
     DARK_SQUARES_COLOR5, DARK_SQUARES_COLOR6
@@ -14,6 +14,8 @@ class Settings:
         self.text_offset = self.button_height
         self.icon_offset = 5
         self.board_offset = 50
+        self.PADDING = 15
+        self.OUTLINE = 2
         self.square_size = SQUARE_SIZE
         self.button1_color = BUTTON_COLOR
         self.button2_color = BUTTON_COLOR
@@ -39,7 +41,9 @@ class Settings:
         elif self.navigator == 1:
             self.draw_pieces_settings_options(self.win, option)
         elif self.navigator == 2:
-            self.draw_squares_settings_options(self.win, option)
+            self.draw_detailed_settings_options(self.win, option, RED, RED, RED, RED, RED, RED, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, LIGHT_SQUARES_COLOR1, LIGHT_SQUARES_COLOR2,
+                                                LIGHT_SQUARES_COLOR3, LIGHT_SQUARES_COLOR4, LIGHT_SQUARES_COLOR5, LIGHT_SQUARES_COLOR6,
+                                                DARK_SQUARES_COLOR1, DARK_SQUARES_COLOR2, DARK_SQUARES_COLOR3, DARK_SQUARES_COLOR4, DARK_SQUARES_COLOR5, DARK_SQUARES_COLOR6)
 
     def set_button_colors(self, option):
         if option == 1:
@@ -103,7 +107,10 @@ class Settings:
         win.blit(tekst, (WIDTH // 4 + self.text_offset, HEIGHT // 4 + 3 * self.space_height + self.button_height - font.get_height() // 2))
 
 
-    def draw_squares_settings_options(self, win, option):
+    def draw_detailed_settings_options(self, win, option, light_pieces_color1,  light_pieces_color2, light_pieces_color3, light_pieces_color4, light_pieces_color5, light_pieces_color6,
+                                       dark_pieces_color1, dark_pieces_color2, dark_pieces_color3, dark_pieces_color4, dark_pieces_color5, dark_pieces_color6,
+                                       light_squares_color1, light_squares_color2, light_squares_color3, light_squares_color4, light_squares_color5, light_squares_color6,
+                                       dark_squares_color1, dark_squares_color2, dark_squares_color3, dark_squares_color4, dark_squares_color5, dark_squares_color6):
         if not pygame.font.get_init():
             pygame.font.init()
 
@@ -116,29 +123,55 @@ class Settings:
         tekst = font.render("SETTINGS", False, TEXT_COLOR)
         win.blit(tekst, (170.6, font.get_height() + font.get_height() // 2))
 
-        pygame.draw.rect(win, LIGHT_SQUARES_COLOR1, (self.board_offset, HEIGHT // 4 + self.board_offset, 2*self.square_size, 2*self.square_size))
-        pygame.draw.rect(win, DARK_SQUARES_COLOR1, (self.board_offset + self.square_size, HEIGHT // 4 + self.board_offset, self.square_size, self.square_size))
-        pygame.draw.rect(win, DARK_SQUARES_COLOR1, (self.board_offset, HEIGHT // 4 + self.board_offset + self.square_size, self.square_size, self.square_size))
+        radius = self.square_size // 2 - self.PADDING
 
-        pygame.draw.rect(win, LIGHT_SQUARES_COLOR2, (2*self.board_offset + 2*self.square_size, HEIGHT // 4 + self.board_offset, 2 * self.square_size, 2 * self.square_size))
-        pygame.draw.rect(win, DARK_SQUARES_COLOR2, (2*self.board_offset + 2*self.square_size + self.square_size, HEIGHT // 4 + self.board_offset, self.square_size, self.square_size))
-        pygame.draw.rect(win, DARK_SQUARES_COLOR2, (2*self.board_offset + 2*self.square_size, HEIGHT // 4 + self.board_offset + self.square_size, self.square_size, self.square_size))
+        pygame.draw.rect(win, light_squares_color1, (self.board_offset, HEIGHT // 4 + self.board_offset, 2*self.square_size, 2*self.square_size))
+        pygame.draw.rect(win, dark_squares_color1, (self.board_offset + self.square_size, HEIGHT // 4 + self.board_offset, self.square_size, self.square_size))
+        pygame.draw.rect(win, dark_squares_color1, (self.board_offset, HEIGHT // 4 + self.board_offset + self.square_size, self.square_size, self.square_size))
+        pygame.draw.circle(win, GREY, (self.board_offset + 1.5 * self.square_size, HEIGHT // 4 + self.board_offset + 0.5 * self.square_size), radius + self.OUTLINE)
+        pygame.draw.circle(win, dark_pieces_color1, (self.board_offset + 1.5 * self.square_size, HEIGHT // 4 + self.board_offset + 0.5 * self.square_size), radius)
+        pygame.draw.circle(win, GREY, (self.board_offset + 0.5 * self.square_size, HEIGHT // 4 + self.board_offset + 1.5 * self.square_size), radius + self.OUTLINE)
+        pygame.draw.circle(win, light_pieces_color1, (self.board_offset + 0.5 * self.square_size, HEIGHT // 4 + self.board_offset + 1.5 * self.square_size), radius)
 
-        pygame.draw.rect(win, LIGHT_SQUARES_COLOR3, (3 * self.board_offset + 4 * self.square_size, HEIGHT // 4 + self.board_offset, 2 * self.square_size, 2 * self.square_size))
-        pygame.draw.rect(win, DARK_SQUARES_COLOR3, (3 * self.board_offset + 4 * self.square_size + self.square_size, HEIGHT // 4 + self.board_offset, self.square_size, self.square_size))
-        pygame.draw.rect(win, DARK_SQUARES_COLOR3, (3 * self.board_offset + 4 * self.square_size, HEIGHT // 4 + self.board_offset + self.square_size, self.square_size, self.square_size))
+        pygame.draw.rect(win, light_squares_color2, (2*self.board_offset + 2*self.square_size, HEIGHT // 4 + self.board_offset, 2 * self.square_size, 2 * self.square_size))
+        pygame.draw.rect(win, dark_squares_color2, (2*self.board_offset + 2*self.square_size + self.square_size, HEIGHT // 4 + self.board_offset, self.square_size, self.square_size))
+        pygame.draw.rect(win, dark_squares_color2, (2*self.board_offset + 2*self.square_size, HEIGHT // 4 + self.board_offset + self.square_size, self.square_size, self.square_size))
+        pygame.draw.circle(win, GREY, (2*self.board_offset + 3.5 * self.square_size, HEIGHT // 4 + self.board_offset + 0.5 * self.square_size), radius + self.OUTLINE)
+        pygame.draw.circle(win, dark_pieces_color2, (2*self.board_offset + 3.5 * self.square_size, HEIGHT // 4 + self.board_offset + 0.5 * self.square_size), radius)
+        pygame.draw.circle(win, GREY, (2*self.board_offset + 2.5 * self.square_size, HEIGHT // 4 + self.board_offset + 1.5 * self.square_size), radius + self.OUTLINE)
+        pygame.draw.circle(win, light_pieces_color2, (2*self.board_offset + 2.5 * self.square_size, HEIGHT // 4 + self.board_offset + 1.5 * self.square_size), radius)
 
-        pygame.draw.rect(win, LIGHT_SQUARES_COLOR4, (self.board_offset, HEIGHT // 4 + 2*self.board_offset + 2* self.square_size, 2 * self.square_size, 2 * self.square_size))
-        pygame.draw.rect(win, DARK_SQUARES_COLOR4, (self.board_offset + self.square_size, HEIGHT // 4 + 2*self.board_offset + 2* self.square_size, self.square_size, self.square_size))
-        pygame.draw.rect(win, DARK_SQUARES_COLOR4, (self.board_offset, HEIGHT // 4 + 2*self.board_offset + 3*self.square_size, self.square_size, self.square_size))
+        pygame.draw.rect(win, light_squares_color3, (3 * self.board_offset + 4 * self.square_size, HEIGHT // 4 + self.board_offset, 2 * self.square_size, 2 * self.square_size))
+        pygame.draw.rect(win, dark_squares_color3, (3 * self.board_offset + 4 * self.square_size + self.square_size, HEIGHT // 4 + self.board_offset, self.square_size, self.square_size))
+        pygame.draw.rect(win, dark_squares_color3, (3 * self.board_offset + 4 * self.square_size, HEIGHT // 4 + self.board_offset + self.square_size, self.square_size, self.square_size))
+        pygame.draw.circle(win, GREY, (3*self.board_offset + 5.5 * self.square_size, HEIGHT // 4 + self.board_offset + 0.5 * self.square_size), radius + self.OUTLINE)
+        pygame.draw.circle(win, dark_pieces_color2, (3*self.board_offset + 5.5 * self.square_size, HEIGHT // 4 + self.board_offset + 0.5 * self.square_size), radius)
+        pygame.draw.circle(win, GREY, (3 * self.board_offset + 4.5 * self.square_size, HEIGHT // 4 + self.board_offset + 1.5 * self.square_size), radius + self.OUTLINE)
+        pygame.draw.circle(win, light_pieces_color2, (3 * self.board_offset + 4.5 * self.square_size, HEIGHT // 4 + self.board_offset + 1.5 * self.square_size), radius)
 
-        pygame.draw.rect(win, LIGHT_SQUARES_COLOR5, (2 * self.board_offset + 2 * self.square_size, HEIGHT // 4 + 2*self.board_offset + 2* self.square_size, 2 * self.square_size, 2 * self.square_size))
-        pygame.draw.rect(win, DARK_SQUARES_COLOR5, (2 * self.board_offset + 2 * self.square_size + self.square_size, HEIGHT // 4 + 2*self.board_offset + 2* self.square_size, self.square_size, self.square_size))
-        pygame.draw.rect(win, DARK_SQUARES_COLOR5, (2 * self.board_offset + 2 * self.square_size, HEIGHT // 4 + 2*self.board_offset + 3*self.square_size, self.square_size, self.square_size))
+        pygame.draw.rect(win, light_squares_color4, (self.board_offset, HEIGHT // 4 + 2*self.board_offset + 2* self.square_size, 2 * self.square_size, 2 * self.square_size))
+        pygame.draw.rect(win, dark_squares_color4, (self.board_offset + self.square_size, HEIGHT // 4 + 2*self.board_offset + 2* self.square_size, self.square_size, self.square_size))
+        pygame.draw.rect(win, dark_squares_color4, (self.board_offset, HEIGHT // 4 + 2*self.board_offset + 3*self.square_size, self.square_size, self.square_size))
+        pygame.draw.circle(win, GREY, (self.board_offset + 1.5 * self.square_size, HEIGHT // 4 + 2*self.board_offset + 2.5 * self.square_size), radius + self.OUTLINE)
+        pygame.draw.circle(win, dark_pieces_color2, (self.board_offset + 1.5 * self.square_size, HEIGHT // 4 + 2*self.board_offset + 2.5 * self.square_size), radius)
+        pygame.draw.circle(win, GREY, (self.board_offset + 0.5 * self.square_size, HEIGHT // 4 + 2*self.board_offset + 3.5 * self.square_size), radius + self.OUTLINE)
+        pygame.draw.circle(win, light_pieces_color2, (self.board_offset + 0.5 * self.square_size, HEIGHT // 4 + 2*self.board_offset + 3.5 * self.square_size), radius)
 
-        pygame.draw.rect(win, LIGHT_SQUARES_COLOR6, (3 * self.board_offset + 4 * self.square_size, HEIGHT // 4 + 2 * self.board_offset + 2 * self.square_size, 2 * self.square_size, 2 * self.square_size))
-        pygame.draw.rect(win, DARK_SQUARES_COLOR6, (3 * self.board_offset + 4 * self.square_size + self.square_size, HEIGHT // 4 + 2 * self.board_offset + 2 * self.square_size, self.square_size, self.square_size))
-        pygame.draw.rect(win, DARK_SQUARES_COLOR6, (3 * self.board_offset + 4 * self.square_size, HEIGHT // 4 + 2 * self.board_offset + 3 * self.square_size, self.square_size, self.square_size))
+        pygame.draw.rect(win, light_squares_color5, (2 * self.board_offset + 2 * self.square_size, HEIGHT // 4 + 2*self.board_offset + 2* self.square_size, 2 * self.square_size, 2 * self.square_size))
+        pygame.draw.rect(win, dark_squares_color5, (2 * self.board_offset + 2 * self.square_size + self.square_size, HEIGHT // 4 + 2*self.board_offset + 2* self.square_size, self.square_size, self.square_size))
+        pygame.draw.rect(win, dark_squares_color5, (2 * self.board_offset + 2 * self.square_size, HEIGHT // 4 + 2*self.board_offset + 3*self.square_size, self.square_size, self.square_size))
+        pygame.draw.circle(win, GREY, (2*self.board_offset + 3.5 * self.square_size, HEIGHT // 4 + 2 * self.board_offset + 2.5 * self.square_size), radius + self.OUTLINE)
+        pygame.draw.circle(win, dark_pieces_color2, (2*self.board_offset + 3.5 * self.square_size, HEIGHT // 4 + 2 * self.board_offset + 2.5 * self.square_size), radius)
+        pygame.draw.circle(win, GREY, (2*self.board_offset + 2.5 * self.square_size, HEIGHT // 4 + 2 * self.board_offset + 3.5 * self.square_size), radius + self.OUTLINE)
+        pygame.draw.circle(win, light_pieces_color2, (2*self.board_offset + 2.5 * self.square_size, HEIGHT // 4 + 2 * self.board_offset + 3.5 * self.square_size), radius)
+
+        pygame.draw.rect(win, light_squares_color6, (3 * self.board_offset + 4 * self.square_size, HEIGHT // 4 + 2 * self.board_offset + 2 * self.square_size, 2 * self.square_size, 2 * self.square_size))
+        pygame.draw.rect(win, dark_squares_color6, (3 * self.board_offset + 4 * self.square_size + self.square_size, HEIGHT // 4 + 2 * self.board_offset + 2 * self.square_size, self.square_size, self.square_size))
+        pygame.draw.rect(win, dark_squares_color6, (3 * self.board_offset + 4 * self.square_size, HEIGHT // 4 + 2 * self.board_offset + 3 * self.square_size, self.square_size, self.square_size))
+        pygame.draw.circle(win, GREY, (3 * self.board_offset + 5.5 * self.square_size, HEIGHT // 4 + 2*self.board_offset + 2.5 * self.square_size), radius + self.OUTLINE)
+        pygame.draw.circle(win, dark_pieces_color2, (3 * self.board_offset + 5.5 * self.square_size, HEIGHT // 4 + 2*self.board_offset + 2.5 * self.square_size), radius)
+        pygame.draw.circle(win, GREY, (3 * self.board_offset + 4.5 * self.square_size, HEIGHT // 4 + 2*self.board_offset + 3.5 * self.square_size), radius + self.OUTLINE)
+        pygame.draw.circle(win, light_pieces_color2, (3 * self.board_offset + 4.5 * self.square_size, HEIGHT // 4 + 2*self.board_offset + 3.5 * self.square_size), radius)
 
 
     def get_second_option_from_mouse(self, pos):
