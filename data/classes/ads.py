@@ -5,12 +5,12 @@ import time
 
 class Ads:
     def __init__(self, win):
-        self.ad1 = pygame.transform.scale(pygame.image.load('data/assets/ad1.png'), (600, 600))
-        self.ad2 = pygame.transform.scale(pygame.image.load('data/assets/ad2.png'), (600, 600))
-        self.ad3 = pygame.transform.scale(pygame.image.load('data/assets/ad3.png'), (600, 600))
-        self.ad4 = pygame.transform.scale(pygame.image.load('data/assets/ad4.png'), (600, 600))
-        self.ad5 = pygame.transform.scale(pygame.image.load('data/assets/ad5.png'), (600, 600))
-        self.status = False
+        self.ad1 = pygame.transform.scale(pygame.image.load('data/assets/ad1.png'), (800, 800))
+        self.ad2 = pygame.transform.scale(pygame.image.load('data/assets/ad2.png'), (800, 800))
+        self.ad3 = pygame.transform.scale(pygame.image.load('data/assets/ad3.png'), (800, 800))
+        self.ad4 = pygame.transform.scale(pygame.image.load('data/assets/ad4.png'), (800, 800))
+        self.ad5 = pygame.transform.scale(pygame.image.load('data/assets/ad5.png'), (800, 800))
+        self.status = True
         self.win = win
 
     def show_ads(self):
@@ -30,7 +30,7 @@ class Ads:
             pygame.display.update()
             pygame.time.wait(3000)
             self.status = False
-            time.sleep(20)
+            time.sleep(120)
 
     def start_ads(self):
         start_new_thread(self.show_ads, ())

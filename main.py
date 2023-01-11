@@ -36,6 +36,8 @@ def main():
     analysis = Analysis(WIN)
     settings = Settings(WIN)
 
+    ads.start_ads()
+
     while run:
         clock.tick(FPS)
 
@@ -77,7 +79,7 @@ def main():
                 pos = pygame.mouse.get_pos()
                 if menu.navigator == 0:
                     option = menu.get_option_from_mouse(pos)
-                    menu.chose_options(option)
+                    menu.choose_options(option)
                 elif menu.navigator == 1:
                     row, col = game.get_row_col_from_mouse(pos)
                     game.select(row, col)

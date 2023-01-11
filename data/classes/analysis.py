@@ -1,5 +1,4 @@
 import pygame
-from .constants import SQUARE_SIZE, WHITE, RED, BLUE
 from .board import Board
 import pickle
 

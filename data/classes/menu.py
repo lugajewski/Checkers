@@ -145,7 +145,7 @@ class Menu:
             option = 5
         return option
 
-    def chose_options(self, option):
+    def choose_options(self, option):
         if self.game == False:
             if option == 1:
                 self.game = True

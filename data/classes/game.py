@@ -14,7 +14,6 @@ class Game:
         self.board = Board()
         self.turn = RED
         self.valid_moves = {}
-        self.online = False
         self.moves = []
         temp_board = deepcopy(self.board)
         self.moves.append(temp_board)

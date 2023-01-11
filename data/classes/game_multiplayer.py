@@ -1,8 +1,6 @@
 import pygame.event
-from copy import deepcopy
 from .board import Board
 from .constants import *
-from .settings import Settings
 
 class Game_multiplayer():
     def __init__(self, win):
@@ -14,11 +12,10 @@ class Game_multiplayer():
         self.board = Board()
         self.turn = RED
         self.valid_moves = {}
-        self.last_board = self.board.board
 
     def update(self, light_pieces_color, dark_pieces_color, light_squares_color, dark_squares_color):
         self.board.draw(self.win, light_pieces_color, dark_pieces_color, light_squares_color, dark_squares_color)
-        self.draw_valid_moves(self.win, self.valid_moves)
+        self.draw_valid_moves(self.valid_moves)
 
     def winner(self):
         if self.board.winner() is not None:
@@ -57,10 +54,10 @@ class Game_multiplayer():
 
         return True
 
-    def draw_valid_moves(self, win, moves):
+    def draw_valid_moves(self, moves):
         for move in moves:
             row, col = move
-            pygame.draw.circle(win, BLUE, (col * SQUARE_SIZE + SQUARE_SIZE // 2, row * SQUARE_SIZE + SQUARE_SIZE // 2), 15)
+            pygame.draw.circle(self.win, BLUE, (col * SQUARE_SIZE + SQUARE_SIZE // 2, row * SQUARE_SIZE + SQUARE_SIZE // 2), 15)
 
     def change_turn(self):
         self.valid_moves = {}
