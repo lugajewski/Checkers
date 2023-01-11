@@ -1,10 +1,9 @@
 import pygame
 from pygame.locals import *
-from data.classes.constants import WIDTH, HEIGHT, SQUARE_SIZE, WHITE, RED, FPS
+from data.classes.constants import WIDTH, HEIGHT, WHITE, FPS
 from data.classes.ads import Ads
 from data.classes.menu import Menu
 from data.classes.game import Game
-from data.classes.game_multiplayer import Game_multiplayer
 from data.classes.analysis import Analysis
 from data.classes.settings import Settings
 from data.classes.AI import minimax
@@ -32,7 +31,7 @@ def main():
     ads = Ads(WIN)
     menu = Menu(WIN)
     game = Game(WIN)
-    game_multiplayer = Game_multiplayer(WIN)
+    game_multiplayer = Game(WIN)
     analysis = Analysis(WIN)
     settings = Settings(WIN)
 
@@ -64,7 +63,10 @@ def main():
                     elif menu.navigator == 1:
                         menu.navigator = 0
                         pickle.dump(game.moves, open("file.p", "wb"))
-                    elif menu.navigator == 2 or menu.navigator == 3 or (menu.navigator == 4 and settings.navigator == 0):
+                    elif menu.navigator == 2:
+                        menu.navigator = 0
+                        pickle.dump(game_multiplayer.moves, open("file.p", "wb"))
+                    elif menu.navigator == 3 or (menu.navigator == 4 and settings.navigator == 0):
                         menu.navigator = 0
                     elif menu.navigator == 4 and (settings.navigator == 1 or settings.navigator == 2):
                         settings.navigator = 0
