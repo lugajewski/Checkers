@@ -6,7 +6,7 @@ from data.classes.menu import Menu
 from data.classes.game import Game
 from data.classes.analysis import Analysis
 from data.classes.settings import Settings
-from data.classes.AI import minimax
+from data.classes.AI import AI
 import pickle
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -31,6 +31,7 @@ def main():
     ads = Ads(WIN)
     menu = Menu(WIN)
     game = Game(WIN)
+    ai = AI()
     game_multiplayer = Game(WIN)
     analysis = Analysis(WIN)
     settings = Settings(WIN)
@@ -41,7 +42,7 @@ def main():
         clock.tick(FPS)
 
         if game.turn == WHITE:
-            value, new_board = minimax(game.get_board(), menu.difficulty, WHITE, game)
+            value, new_board = ai.minimax(game.get_board(), menu.difficulty, WHITE, game)
             game.ai_move(new_board)
 
         if game.winner() is not None:
